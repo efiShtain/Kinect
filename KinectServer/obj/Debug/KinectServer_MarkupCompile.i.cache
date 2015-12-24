@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-H:\Kinect\Tests\TestingKinect\KinectServer\obj\Debug\
+C:\Users\efi\Documents\KinectGit\Kinect\KinectServer\obj\Debug\
 KinectServer
 none
 false
 DEBUG;TRACE
-H:\Kinect\Tests\TestingKinect\KinectServer\App.xaml
+C:\Users\efi\Documents\KinectGit\Kinect\KinectServer\App.xaml
 11151548125
 
 30859637126
-23-281863729
+23655679791
 MainWindow.xaml;
 
-False
+True
 

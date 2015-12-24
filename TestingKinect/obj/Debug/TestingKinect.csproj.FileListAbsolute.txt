@@ -22,3 +22,6 @@ H:\Kinect\Tests\TestingKinect\TestingKinect\bin\Debug\log4net.xml
 H:\Kinect\Tests\TestingKinect\TestingKinect\bin\Debug\SocketIOClient.pdb
 H:\Kinect\Tests\TestingKinect\TestingKinect\bin\Debug\SocketIOClient.xml
 H:\Kinect\Tests\TestingKinect\TestingKinect\bin\Debug\WebSocket4Net.pdb
+C:\Users\efi\Documents\KinectGit\Kinect\TestingKinect\bin\Debug\TestingKinect.exe.config
+C:\Users\efi\Documents\KinectGit\Kinect\TestingKinect\obj\Debug\TestingKinect.exe
+C:\Users\efi\Documents\KinectGit\Kinect\TestingKinect\obj\Debug\TestingKinect.pdb

@@ -1,0 +1,9 @@
+H:\Kinect\Tests\TestingKinect\PhysicsSimulator\bin\Debug\PhysicsSimulator.exe.config
+H:\Kinect\Tests\TestingKinect\PhysicsSimulator\bin\Debug\PhysicsSimulator.exe
+H:\Kinect\Tests\TestingKinect\PhysicsSimulator\bin\Debug\PhysicsSimulator.pdb
+H:\Kinect\Tests\TestingKinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.csprojResolveAssemblyReference.cache
+H:\Kinect\Tests\TestingKinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.Form1.resources
+H:\Kinect\Tests\TestingKinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.Properties.Resources.resources
+H:\Kinect\Tests\TestingKinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.csproj.GenerateResource.Cache
+H:\Kinect\Tests\TestingKinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.exe
+H:\Kinect\Tests\TestingKinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.pdb

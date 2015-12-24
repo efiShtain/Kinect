@@ -1,0 +1,5 @@
+H:\Kinect\Tests\TestingKinect\TestingRandom\bin\Debug\TestingRandom.exe.config
+H:\Kinect\Tests\TestingKinect\TestingRandom\bin\Debug\TestingRandom.exe
+H:\Kinect\Tests\TestingKinect\TestingRandom\bin\Debug\TestingRandom.pdb
+H:\Kinect\Tests\TestingKinect\TestingRandom\obj\Debug\TestingRandom.exe
+H:\Kinect\Tests\TestingKinect\TestingRandom\obj\Debug\TestingRandom.pdb

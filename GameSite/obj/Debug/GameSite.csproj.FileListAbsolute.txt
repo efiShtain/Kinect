@@ -1,0 +1,6 @@
+H:\Kinect\Tests\TestingKinect\GameSite\bin\Debug\GameSite.exe.config
+H:\Kinect\Tests\TestingKinect\GameSite\bin\Debug\GameSite.exe
+H:\Kinect\Tests\TestingKinect\GameSite\bin\Debug\GameSite.pdb
+H:\Kinect\Tests\TestingKinect\GameSite\obj\Debug\GameSite.exe
+H:\Kinect\Tests\TestingKinect\GameSite\obj\Debug\GameSite.pdb
+H:\Kinect\Tests\TestingKinect\GameSite\obj\Debug\GameSite.csprojResolveAssemblyReference.cache

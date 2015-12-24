@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Physics;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,7 +15,10 @@ namespace PhysicsSimulator
     public partial class Form1 : Form
     {
         Moveable _p;
+        BoundingRect _inner, _outter;
         Timer _t;
+        List<Slice> _slices;
+        BoundingRect _body;
         public Form1()
         {
             InitializeComponent();
@@ -23,6 +27,11 @@ namespace PhysicsSimulator
             _t = new Timer();
             _t.Tick += _t_Tick;
             _t.Interval = 20;
+            _body = new BoundingRect(0, 0, 0, 50, 50, 50);
+            _inner = _body.Inflate(0.1f, 0.1f, 0.1f);
+            _outter = _body.Inflate(0.2f,0.2f,0.2f);
+            _slices = Slicer.SliceRect(_inner, _outter, 3);
+
         }
 
         private void _t_Tick(object sender, EventArgs e)
@@ -48,12 +57,45 @@ namespace PhysicsSimulator
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            textBox2.Text = "Details:\n";
+            textBox2.AppendText("inner: " + _inner.ToString()+'\n');
+            textBox2.AppendText("outter: " + _outter.ToString()+'\n');
+            foreach(var s in _slices)
+            {
+                textBox2.AppendText(s.ToString() + '\n');
+            }
+        }
+        int index = 0;
+        void addSlice(Slice s)
+        {
+            chart1.Series[index].Points.AddXY(s.X, s.Y);
+            chart1.Series[index].Points.AddXY(s.X + s.Width, s.Y);
+            chart1.Series[index].Points.AddXY(s.X + s.Width, s.Y + s.Height);
+            chart1.Series[index++].Points.AddXY(s.X, s.Y + s.Height);
+        }
 
+        void addRandomPoints(Slice s)
+        {
+            var p = s.ConvertPoint(0.5f, 0.9f, 0.1f);
+            chart1.Series["p"].Points.AddXY(p.X,p.Y);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _t.Start();
+            //_t.Start();
+
+
+            addSlice(_slices[1]);
+            addSlice(_slices[0]);
+            addSlice(_slices[2]);
+            chart1.Series["b"].Points.AddXY(_body.X, _body.Y);
+            chart1.Series["b"].Points.AddXY(_body.X + _body.Width, _body.Y);
+            chart1.Series["b"].Points.AddXY(_body.X + _body.Width, _body.Y + _body.Height);
+            chart1.Series["b"].Points.AddXY(_body.X, _body.Y + _body.Height);
+
+            addRandomPoints(_slices[0]);
+            addRandomPoints(_slices[1]);
+            addRandomPoints(_slices[2]);
         }
 
         private void button2_Click(object sender, EventArgs e)

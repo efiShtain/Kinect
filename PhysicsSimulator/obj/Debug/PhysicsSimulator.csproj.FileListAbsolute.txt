@@ -16,3 +16,5 @@ C:\Users\everysight\Documents\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator
 C:\Users\everysight\Documents\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.exe
 C:\Users\everysight\Documents\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.pdb
 C:\Users\everysight\Documents\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.csprojResolveAssemblyReference.cache
+C:\Users\everysight\Documents\Kinect\PhysicsSimulator\bin\Debug\Physics.dll
+C:\Users\everysight\Documents\Kinect\PhysicsSimulator\bin\Debug\Physics.pdb

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingKinect", "TestingKinect\TestingKinect.csproj", "{C0D841E6-D6DA-4FF3-8B6B-B1BD0F53E7D9}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpServer", "HttpServer\HttpServer.csproj", "{ECAB4C65-19C1-4597-B424-4F4877BC3BBC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhysicsSimulator", "PhysicsSimulator\PhysicsSimulator.csproj", "{1C67FC35-4AF1-4515-B0CF-9389E7433C7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics", "Physics\Physics.csproj", "{12A5665D-1581-40FC-AE92-BBC51C5A06D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,22 @@ Global
 		{1C67FC35-4AF1-4515-B0CF-9389E7433C7A}.Release|ARM.ActiveCfg = Release|Any CPU
 		{1C67FC35-4AF1-4515-B0CF-9389E7433C7A}.Release|x64.ActiveCfg = Release|Any CPU
 		{1C67FC35-4AF1-4515-B0CF-9389E7433C7A}.Release|x86.ActiveCfg = Release|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Debug|ARM.Build.0 = Debug|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Debug|x64.Build.0 = Debug|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Debug|x86.Build.0 = Debug|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Release|ARM.ActiveCfg = Release|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Release|ARM.Build.0 = Release|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Release|x64.ActiveCfg = Release|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Release|x64.Build.0 = Release|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Release|x86.ActiveCfg = Release|Any CPU
+		{12A5665D-1581-40FC-AE92-BBC51C5A06D7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

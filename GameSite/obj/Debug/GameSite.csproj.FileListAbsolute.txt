@@ -4,3 +4,9 @@ H:\Kinect\Tests\TestingKinect\GameSite\bin\Debug\GameSite.pdb
 H:\Kinect\Tests\TestingKinect\GameSite\obj\Debug\GameSite.exe
 H:\Kinect\Tests\TestingKinect\GameSite\obj\Debug\GameSite.pdb
 H:\Kinect\Tests\TestingKinect\GameSite\obj\Debug\GameSite.csprojResolveAssemblyReference.cache
+C:\Users\everysight\Documents\Kinect\GameSite\bin\Debug\GameSite.exe.config
+C:\Users\everysight\Documents\Kinect\GameSite\bin\Debug\GameSite.exe
+C:\Users\everysight\Documents\Kinect\GameSite\bin\Debug\GameSite.pdb
+C:\Users\everysight\Documents\Kinect\GameSite\obj\Debug\GameSite.csprojResolveAssemblyReference.cache
+C:\Users\everysight\Documents\Kinect\GameSite\obj\Debug\GameSite.exe
+C:\Users\everysight\Documents\Kinect\GameSite\obj\Debug\GameSite.pdb

@@ -7,3 +7,12 @@ H:\Kinect\Tests\TestingKinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.Proper
 H:\Kinect\Tests\TestingKinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.csproj.GenerateResource.Cache
 H:\Kinect\Tests\TestingKinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.exe
 H:\Kinect\Tests\TestingKinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.pdb
+C:\Users\everysight\Documents\Kinect\PhysicsSimulator\bin\Debug\PhysicsSimulator.exe.config
+C:\Users\everysight\Documents\Kinect\PhysicsSimulator\bin\Debug\PhysicsSimulator.exe
+C:\Users\everysight\Documents\Kinect\PhysicsSimulator\bin\Debug\PhysicsSimulator.pdb
+C:\Users\everysight\Documents\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.Form1.resources
+C:\Users\everysight\Documents\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.Properties.Resources.resources
+C:\Users\everysight\Documents\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.csproj.GenerateResource.Cache
+C:\Users\everysight\Documents\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.exe
+C:\Users\everysight\Documents\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.pdb
+C:\Users\everysight\Documents\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.csprojResolveAssemblyReference.cache

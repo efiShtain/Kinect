@@ -13,55 +13,52 @@ namespace PhysicsSimulator
 
     public partial class Form1 : Form
     {
+        Moveable _p;
+        Timer _t;
         public Form1()
         {
             InitializeComponent();
+            _p = new Moveable(0, 0, 0, 1, 2, 0.3f, 0,3f, 0);
+            _p.Init();
+            _t = new Timer();
+            _t.Tick += _t_Tick;
+            _t.Interval = 20;
         }
-        Timer t;
-        Point init;
-        long _startTime;
-        long _timer;
-        int _radius;
+
+        private void _t_Tick(object sender, EventArgs e)
+        {
+            var res = _p.GetNextPosition();
+            chart1.Series["x"].Points.AddXY(res.X, res.Y);        
+                //chart1.Series["x"].Points.AddY(res.X);
+            //chart1.Series["y"].Points.AddY(res.Y);
+            //chart1.Series["z"].Points.AddY(res.Z);
+            if (textBox1.InvokeRequired)
+            {
+                textBox1.Invoke(new Action(() =>
+                {
+                    textBox1.AppendText(res.ToString() + Environment.NewLine);
+                }));
+            }
+            else
+            {
+                textBox1.AppendText(res.ToString() + Environment.NewLine);
+            }
+
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            t = new Timer();
-            t.Tick += t_Tick;
-            t.Interval = 20;
-            t.Start();
-            init = new Point(cb.Top, cb.Left);
-            _startTime = DateTime.Now.Ticks;
-            _timer = 0;
-            _radius = 50;
+
         }
 
-        private int positionX()
+        private void button1_Click(object sender, EventArgs e)
         {
-            var res = (int)(init.X + 0.1 * (_timer));
-            return res;
-        }
-        private int positionY()
-        {
-            var res = (int)(init.Y + 1.8 * (_timer));
-            return res;
-        }
-        
-        //X^2+Y^2=r
-        /*
-         * x=sqrt(r-y^2)
-         * 
-         */
-        private int circX()
-        {
-            var res = (int)(Math.Sqrt(_radius - Math.Pow(cb.Top, 2)));
-            return res;
-        }
-        void t_Tick(object sender, EventArgs e)
-        {
-            _timer++;
-            cb.Top =positionX();
-            cb.Left =positionY();
+            _t.Start();
         }
 
-
+        private void button2_Click(object sender, EventArgs e)
+        {
+            _t.Stop();
+        }
     }
 }

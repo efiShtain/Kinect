@@ -58,7 +58,7 @@ namespace KinectServer.BusinessLogic
 
             _kinectSkeletonCoordinatePerStage = new Dictionary<string, List<List<Point3D>>>();
             _recordedHitsData = new Dictionary<string, List<Hit>>();
-
+            _trajectoriesData = new Dictionary<string, List<Point3D>>();
             _pointsParser = new CustomPointsListParser();
             _pointsParser.Init();
             _game = new GameLogic(_pointsParser.GetStages());

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace KinectServer.BusinessLogic
 {
@@ -26,7 +27,7 @@ namespace KinectServer.BusinessLogic
             _folder = path;
         }
         public static event Action<string> WritingActionStateChanged;
-        public static void ToMat(List<List<PointRealWorld>> skeleton, string name = null)
+        public static void ToMat(List<List<Point3D>> skeleton, string name = null)
         {
             Task.Factory.StartNew(() =>
             {
@@ -73,7 +74,7 @@ namespace KinectServer.BusinessLogic
         }
 
 
-        public static void ToMatRandom(List<List<PointRealWorld>> skeleton, List<Hit> hits, string name = null)
+        public static void ToMatRandom(List<List<Point3D>> skeleton, List<Hit> hits, string name = null)
         {
             Task.Factory.StartNew(() =>
             {
@@ -185,7 +186,7 @@ namespace KinectServer.BusinessLogic
         }
 
 
-        public static void ToMatAll(List<List<PointRealWorld>> skeleton, List<Hit> hits, List<PointRealWorld> trajectories, string name = "")
+        public static void ToMatAll(List<List<Point3D>> skeleton, List<Hit> hits, List<Point3D> trajectories, string name = "")
         {
             Task.Factory.StartNew(() =>
             {

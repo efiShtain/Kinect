@@ -13,12 +13,13 @@ namespace KinectServer.BusinessLogic
         private List<Instruction> _instructionsSet;
         private int _currentInstruction;
 
-        public GameLogic()
+        public GameLogic(List<Instruction> instructions)
         {
             //_instructionsSet = new Dictionary<byte, Instruction>();
             _instructionsSet = new List<Instruction>();
-            _instructionsSet.Add( new Instruction() { Text = "Move your arms and legs in order to touch the astroid\n", State = "random" });
-            _instructionsSet.Add( new Instruction() { Text = "Try to touch the moving objects on screen", State = "moving" });
+            _instructionsSet.AddRange(instructions);
+            //_instructionsSet.Add( new Instruction() { Text = "Move your arms and legs in order to touch the astroid\n", State = "playground" });
+            //_instructionsSet.Add( new Instruction() { Text = "Try to touch the moving objects on screen", State = "playground" });
             _instructionsSet.Add( new Instruction() { Text = "Thank you for participating!", State = "win" });
             _currentInstruction = -1;
         }

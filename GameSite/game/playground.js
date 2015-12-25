@@ -1,4 +1,4 @@
-﻿var movingState = (function () {
+﻿var playground = (function () {
     var isSet = false;
     var joints = 'undefined';
     var nextStarId = 0;
@@ -18,7 +18,7 @@
     function endStage() {
         var server = Server.GetInstance();
         server.UnregisterForMessages(Server.Protocol.SKELETON_DATA, updateJoints);
-        server.UnregisterForMessages(Server.Protocol.GET_NEXT_STAR_MOVING_POSITION, drawNewStar);
+        server.UnregisterForMessages(Server.Protocol.GET_NEXT_STAR_POSITION, drawNewStar);
         server.Send({ Type: Server.Protocol.KINECT_STOP });
         game.state.start('instructions');
     }
@@ -28,7 +28,7 @@
         if (data != null) {
             nextStarPoint = data;
         }
-        console.log("Creating random star");
+        console.log("Creating star");
         currentStar = starsGroup.create(nextStarPoint.X, nextStarPoint.Y, 'a' + Math.floor(Math.random() * 10 % 3 + 1));
         currentStar.scale.setTo(2.0, 2.0);
         console.log("nextStarId: " + nextStarId);
@@ -55,7 +55,7 @@
 
 
     function getNewStarFromServer() {
-        server.Send({ Type: Server.Protocol.GET_NEXT_STAR_MOVING_POSITION });
+        server.Send({ Type: Server.Protocol.GET_NEXT_STAR_POSITION });
     }
 
     function killStar(player, star) {
@@ -66,9 +66,9 @@
         emitter.start(true, 2000, null, 4);
         star.kill();
         var enemiesLeft = GlobalConfiguration.EnemyCount || GlobalConfiguration.movingStarsToWin;
+        server.Send({ Type: Server.Protocol.HITS_DATA, Data: JSON.stringify(hittingJoint) });
         if (nextStarId < enemiesLeft) {
             text.text = "You got " + nextStarId + " out of " + enemiesLeft;
-            server.Send({ Type: Server.Protocol.MOVING_HITS_DATA, Data: JSON.stringify(hittingJoint) });
             game.time.events.add(GlobalConfiguration.movingStarsDelay, getNewStarFromServer);
         } else {
             text.text = "Good! wait for next stage...";
@@ -115,7 +115,7 @@
             text = game.add.text(10, 10, 'Good Luck!', { font: '30px Courier', fill: '#ffffff' });
 
             Server.GetInstance().RegisterForMessages(Server.Protocol.SKELETON_DATA, updateJoints);
-            Server.GetInstance().RegisterForMessages(Server.Protocol.GET_NEXT_STAR_MOVING_POSITION, drawNewStar);
+            Server.GetInstance().RegisterForMessages(Server.Protocol.GET_NEXT_STAR_POSITION, drawNewStar);
 
             game.time.events.add(GlobalConfiguration.movingStarsDelay, getNewStarFromServer);
 

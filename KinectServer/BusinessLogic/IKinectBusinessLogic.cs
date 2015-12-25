@@ -1,9 +1,11 @@
 ﻿using KinectServer.DTO;
+using KinectServer.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace KinectServer.BusinessLogic
 {
@@ -11,7 +13,7 @@ namespace KinectServer.BusinessLogic
     {
         event Action<bool> KinectAvailabletyChanged;
         //event Action<List<ScreenPoint>,List<KinectPoint>> NewJointsDataReady;
-        event Action<DisplayData, List<PointRealWorld>, PointRealWorld> NewJointsDataReady;
+        event Action<DisplayData, List<Point3D>, Point3D> NewJointsDataReady;
 
         bool StartKinect();
         bool StopKinect();
@@ -21,6 +23,7 @@ namespace KinectServer.BusinessLogic
         bool IsOpen { get; }
         bool IsNextPointMoving { get; set; }
         bool IsGetNextPoint { get; set; }
-        void SetEnemiesList (List<PointRealWorld> enemies);
+        void SetEnemiesList (List<UserDefinedPoint> enemies);
+        void SetInflationRatios(Dictionary<string, float> inner, Dictionary<string,float> outter);
     }
 }

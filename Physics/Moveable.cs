@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Media3D;
 
-namespace PhysicsSimulator
+namespace Physics
 {
 
     public class Moveable
@@ -12,6 +12,7 @@ namespace PhysicsSimulator
         float _x0, _y0, _z0;
         float _v0x, _v0y, _v0z;
         float _ax, _ay, _az;
+        Point3D _lastPoistion;
         public Moveable(float x0, float y0, float z0,
                         float v0x, float v0y, float v0z,
                         float ax, float ay, float az)
@@ -25,6 +26,7 @@ namespace PhysicsSimulator
             _ax = ax;
             _ay = ay;
             _az = az;
+            _lastPoistion = new Point3D(_x0, _y0, _z0);
         }
 
         public void Init()
@@ -34,12 +36,17 @@ namespace PhysicsSimulator
 
         public Point3D GetNextPosition()
         {
-            Point3D point = new Point3D();
+            _lastPoistion = new Point3D();
             double dt = (DateTime.Now - _t0).TotalSeconds;
-            point.X = calculate(dt, Axis.X);
-            point.Y = calculate(dt, Axis.Y);
-            point.Z = calculate(dt, Axis.Z);
-            return point;
+            _lastPoistion.X = calculate(dt, Axis.X);
+            _lastPoistion.Y= calculate(dt, Axis.Y);
+            _lastPoistion.Z = calculate(dt, Axis.Z);
+            return _lastPoistion;
+        }
+
+        public Point3D GetLastPosition()
+        {
+            return _lastPoistion;
         }
 
         float calculate(double dt, Axis axe)

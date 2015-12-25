@@ -20,8 +20,14 @@
         //all game states
         game.state.add('boot', bootState);
         game.state.add('load', loadState);
-        game.state.add('random', randomState);
-        game.state.add('moving', movingState);
+        //game.state.add('random', randomState);
+        //game.state.add('moving', movingState);
+        //game.state.add('playground', playground);
+
+        GlobalConfiguration.States.forEach(function (state, index, array) {
+            game.state.add(state, playground);
+        });
+
         game.state.add('win', winState);
         game.state.add('instructions', instructionsState);
 

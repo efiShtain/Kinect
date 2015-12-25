@@ -118,6 +118,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\GameInputFile.cs" />
+    <Compile Include="Model\UserDefinedPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -157,7 +159,12 @@
       <Project>{d6eb17bf-9074-484f-9950-e06169a3c39d}</Project>
       <Name>MatlabBridge</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Physics\Physics.csproj">
+      <Project>{12a5665d-1581-40fc-ae92-bbc51c5a06d7}</Project>
+      <Name>Physics</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

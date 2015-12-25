@@ -58,7 +58,7 @@
     <Content Include="assets\particle.png" />
     <Content Include="assets\rocket1.png" />
     <Content Include="assets\rocket2.PNG" />
-    <Content Include="js\CoordinatesSystem.js" />
+    <Content Include="game\playground.js" />
     <Content Include="js\GlobalConfiguration.js" />
     <Content Include="game\instructions.js" />
     <Content Include="game\win.js" />
@@ -67,9 +67,8 @@
     <Content Include="game\playRandom.js" />
     <Content Include="game\game.js" />
     <Content Include="game\boot.js" />
-    <Content Include="js\socketHandler.js" />
+    <Content Include="js\Server.js" />
     <Content Include="js\Queue.js" />
-    <Content Include="server.js" />
     <None Include="App.config" />
     <Content Include="game.html" />
     <Content Include="index.html" />

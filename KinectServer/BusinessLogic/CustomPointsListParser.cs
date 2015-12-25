@@ -1,4 +1,5 @@
 ﻿using KinectServer.DTO;
+using KinectServer.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,11 @@ namespace KinectServer.BusinessLogic
 {
     public class CustomPointsListParser
     {
-        Dictionary<string, Dictionary<string, List<PointRealWorld>>> _userEnemies;
+        GameInputFile _gameInputDetails;
         public CustomPointsListParser()
         {
-            _userEnemies = null;
-            
+            _gameInputDetails = null;
+
         }
         public bool Init()
         {
@@ -24,7 +25,7 @@ namespace KinectServer.BusinessLogic
             try
             {
                 var str = File.ReadAllText(enemiesFilePath);
-                _userEnemies = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<PointRealWorld>>>>(str);
+                _gameInputDetails = JsonConvert.DeserializeObject<GameInputFile>(str);
                 return true;
             }
             catch (Exception e)
@@ -33,18 +34,47 @@ namespace KinectServer.BusinessLogic
             }
         }
 
-
-        public List<PointRealWorld> GetPointsForStage(string username, string stage)
+        public Dictionary<string,float> GetInnerBoundaryInflationRatios()
         {
-            if (_userEnemies.ContainsKey(username))
+            return _gameInputDetails.InnerBoundryInflRatio;
+        }
+
+        public Dictionary<string, float> GetOuterBoundaryInflationRatios()
+        {
+            return _gameInputDetails.OuterBoundryInflRatio;
+        }
+
+        
+
+        public List<UserDefinedPoint> GetPointsForStage(string username, string stage)
+        {
+            if (_gameInputDetails.Players.ContainsKey(username))
             {
-                if (_userEnemies[username].ContainsKey(stage))
+                if (_gameInputDetails.Players[username].ContainsKey(stage))
                 {
-                    return _userEnemies[username][stage];
+                    return _gameInputDetails.Players[username][stage];
                 }
             }
             return null;
         }
-        
+
+        public List<Instruction> GetStages()
+        {
+            var stages = new List<Instruction>();
+            var firstPlayerStages = _gameInputDetails.Players.FirstOrDefault().Value;
+            if (firstPlayerStages != null)
+            {
+                foreach(var s in firstPlayerStages.Keys)
+                {
+                    var inst = new Instruction();
+                    inst.State = s;
+                    inst.Text = s;
+                    inst.EnemyCount = firstPlayerStages[s].Count;
+                }               
+            }
+            return stages;
+        }
+
     }
+
 }

@@ -79,3 +79,5 @@ C:\Users\everysight\Documents\Kinect\KinectServer\obj\Debug\KinectServer.Propert
 C:\Users\everysight\Documents\Kinect\KinectServer\obj\Debug\KinectServer.csproj.GenerateResource.Cache
 C:\Users\everysight\Documents\Kinect\KinectServer\obj\Debug\KinectServer.exe
 C:\Users\everysight\Documents\Kinect\KinectServer\obj\Debug\KinectServer.pdb
+C:\Users\everysight\Documents\Kinect\KinectServer\bin\Debug\Physics.dll
+C:\Users\everysight\Documents\Kinect\KinectServer\bin\Debug\Physics.pdb

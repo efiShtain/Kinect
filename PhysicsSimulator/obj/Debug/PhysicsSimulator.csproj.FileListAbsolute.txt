@@ -20,3 +20,16 @@ C:\Users\everysight\Documents\Kinect\PhysicsSimulator\bin\Debug\Physics.dll
 C:\Users\everysight\Documents\Kinect\PhysicsSimulator\bin\Debug\Physics.pdb
 C:\Users\everysight\Documents\Kinect\PhysicsSimulator\bin\Debug\Newtonsoft.Json.dll
 C:\Users\everysight\Documents\Kinect\PhysicsSimulator\bin\Debug\Newtonsoft.Json.xml
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\bin\Debug\PhysicsSimulator.exe.config
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\bin\Debug\PhysicsSimulator.exe
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\bin\Debug\PhysicsSimulator.pdb
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\bin\Debug\Newtonsoft.Json.dll
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\bin\Debug\Physics.dll
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\bin\Debug\Physics.pdb
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\bin\Debug\Newtonsoft.Json.xml
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.csprojResolveAssemblyReference.cache
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.Form1.resources
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.Properties.Resources.resources
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.csproj.GenerateResource.Cache
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.exe
+C:\Users\efi\Documents\KinectGit\Kinect\PhysicsSimulator\obj\Debug\PhysicsSimulator.pdb

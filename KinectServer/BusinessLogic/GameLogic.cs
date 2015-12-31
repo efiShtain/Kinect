@@ -21,7 +21,7 @@ namespace KinectServer.BusinessLogic
             //_instructionsSet.Add( new Instruction() { Text = "Move your arms and legs in order to touch the astroid\n", State = "playground" });
             //_instructionsSet.Add( new Instruction() { Text = "Try to touch the moving objects on screen", State = "playground" });
             _instructionsSet.Add( new Instruction() { Text = "Thank you for participating!", State = "win" });
-            _currentInstruction = -1;
+            _currentInstruction = 0;
         }
 
         public Instruction NextInstruction

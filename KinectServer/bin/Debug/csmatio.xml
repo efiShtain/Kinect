@@ -36,11 +36,6 @@
             </summary>
             <returns>The amount of bytes remaining</returns>
         </member>
-        <member name="P:csmatio.common.ByteBuffer.HasRemaining">
-            <summary>
-            Does the <c>ByteBuffer</c> have any bytes remaining?
-            </summary>
-        </member>
         <member name="M:csmatio.common.ByteBuffer.Position(System.Int32)">
             <summary>
             Set the relative position marker to a specific index within the buffer.
@@ -54,11 +49,6 @@
             Gets the relative position of the <c>ByteBuffer</c>.
             </summary>
             <returns>Position of the <c>ByteBuffer</c> relative index</returns>
-        </member>
-        <member name="P:csmatio.common.ByteBuffer.Limit">
-            <summary>
-            Get the total limit to the byte buffer
-            </summary>
         </member>
         <member name="M:csmatio.common.ByteBuffer.Rewind">
             <summary>
@@ -326,6 +316,16 @@
             <param name="val">The double value to be written</param>
             <returns>This buffer</returns>
         </member>
+        <member name="P:csmatio.common.ByteBuffer.HasRemaining">
+            <summary>
+            Does the <c>ByteBuffer</c> have any bytes remaining?
+            </summary>
+        </member>
+        <member name="P:csmatio.common.ByteBuffer.Limit">
+            <summary>
+            Get the total limit to the byte buffer
+            </summary>
+        </member>
         <member name="T:csmatio.common.MatDataTypes">
             <summary>
             MAT-file data types
@@ -485,22 +485,6 @@
             <param name="Version">By default, is set to 0x0100</param>
             <param name="EndianIndicator">Byte array size of 2 indicating byte-swapping requirements</param>
         </member>
-        <member name="P:csmatio.io.MatFileHeader.Description">
-            <summary>
-            Gets the descriptive text.
-            </summary>
-        </member>
-        <member name="P:csmatio.io.MatFileHeader.EndianIndicator">
-            <summary>
-            Gets the endian indicator.  Bytes written as "MI" suggest that byte-swapping operation is required
-            in order to interpret data correctly.  If value is set to "IM", byte-swapping is not needed.
-            </summary>
-        </member>
-        <member name="P:csmatio.io.MatFileHeader.Version">
-            <summary>
-            When creating a MAT-file, set version to 0x0100
-            </summary>
-        </member>
         <member name="M:csmatio.io.MatFileHeader.CreateHeader">
             <summary>
             A static factory that creates a new <c>MatFileHeader</c> instance with default header values:
@@ -515,6 +499,22 @@
         <member name="M:csmatio.io.MatFileHeader.ToString">
             <summary>
             <see cref="M:System.Object.ToString"/>
+            </summary>
+        </member>
+        <member name="P:csmatio.io.MatFileHeader.Description">
+            <summary>
+            Gets the descriptive text.
+            </summary>
+        </member>
+        <member name="P:csmatio.io.MatFileHeader.EndianIndicator">
+            <summary>
+            Gets the endian indicator.  Bytes written as "MI" suggest that byte-swapping operation is required
+            in order to interpret data correctly.  If value is set to "IM", byte-swapping is not needed.
+            </summary>
+        </member>
+        <member name="P:csmatio.io.MatFileHeader.Version">
+            <summary>
+            When creating a MAT-file, set version to 0x0100
             </summary>
         </member>
         <member name="T:csmatio.io.MatFileInputStream">
@@ -637,16 +637,6 @@
             <param name="fileName">The name of the MAT-file to open</param>
             <param name="filter"><c>MatFileFilter</c></param>
         </member>
-        <member name="P:csmatio.io.MatFileReader.MatFileHeader">
-            <summary>
-            Gets MAT-file header.
-            </summary>
-        </member>
-        <member name="P:csmatio.io.MatFileReader.Data">
-            <summary>
-            Returns list of <c>MLArray</c> objects that were inside the MAT-file
-            </summary>
-        </member>
         <member name="M:csmatio.io.MatFileReader.GetMLArray(System.String)">
             <summary>
             Returns the value to which the read file maps the specific array name.
@@ -657,12 +647,6 @@
             <param name="name">Array name</param>
             <returns>The <c>MLArray</c> to which this file maps the specific name,
             or null if the file contains no content for this name</returns>
-        </member>
-        <member name="P:csmatio.io.MatFileReader.Content">
-            <summary>
-            Returns a map of <c>MLArray</c> objects that were inside MAT-file.
-            </summary>
-            <remarks>MLArrays are keyed with the MLArrays' name.</remarks>
         </member>
         <member name="M:csmatio.io.MatFileReader.Inflate(System.IO.Stream,System.Int32)">
             <summary>
@@ -734,6 +718,22 @@
             </summary>
             <param name="buf"><c>BinaryReader</c> input stream</param>
         </member>
+        <member name="P:csmatio.io.MatFileReader.MatFileHeader">
+            <summary>
+            Gets MAT-file header.
+            </summary>
+        </member>
+        <member name="P:csmatio.io.MatFileReader.Data">
+            <summary>
+            Returns list of <c>MLArray</c> objects that were inside the MAT-file
+            </summary>
+        </member>
+        <member name="P:csmatio.io.MatFileReader.Content">
+            <summary>
+            Returns a map of <c>MLArray</c> objects that were inside MAT-file.
+            </summary>
+            <remarks>MLArrays are keyed with the MLArrays' name.</remarks>
+        </member>
         <member name="T:csmatio.io.MatFileReader.ISMatTag">
             <summary>
             TAG operator.  Facilitates reading operations.
@@ -742,6 +742,58 @@
             <i>Note: Reading from buffer and/or stream modifies it's position.</i>
             </remarks>
             <author>David Zier (<a href="mailto:david.zier@gmail.com">david.zier@gmail.com</a>)</author>
+        </member>
+        <member name="T:csmatio.io.MatTag">
+            <summary>
+            Used to create a MAT-file style tag
+            </summary>
+            <author>David Zier (david.zier@gmail.com)</author>
+        </member>
+        <member name="F:csmatio.io.MatTag._type">
+            <summary>
+            The array type for this tag.
+            </summary>
+        </member>
+        <member name="F:csmatio.io.MatTag._size">
+            <summary>
+            The size of the tag.
+            </summary>
+        </member>
+        <member name="M:csmatio.io.MatTag.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Create a new MAT-file tag object.
+            </summary>
+            <param name="Type">The type of the array for this tag</param>
+            <param name="Size">The size of the tag</param>
+        </member>
+        <member name="M:csmatio.io.MatTag.GetPadding(System.Int32,System.Boolean)">
+            <summary>
+            Calculate the padding for the element.
+            </summary>
+            <param name="size">The size of the element.</param>
+            <param name="compressed">Is the tag compressed?</param>
+            <returns>The number of padding bytes</returns>
+        </member>
+        <member name="M:csmatio.io.MatTag.ToString">
+            <summary>
+            <see cref="M:System.Object.ToString"/>
+            </summary>
+        </member>
+        <member name="M:csmatio.io.MatTag.SizeOf">
+            <summary>
+            Get size of single data in this tag.
+            </summary>
+            <returns>The number of bytes for single data</returns>
+        </member>
+        <member name="P:csmatio.io.MatTag.Type">
+            <summary>
+            Get the type of the MatTag
+            </summary>
+        </member>
+        <member name="P:csmatio.io.MatTag.Size">
+            <summary>
+            Get the number of bytes for the MAT-Data object
+            </summary>
         </member>
         <member name="F:csmatio.io.MatFileReader.ISMatTag.Buf">
             <summary>
@@ -913,203 +965,17 @@
             </summary>
             <param name="s">A string containing the error information.</param>
         </member>
-        <member name="T:csmatio.io.MatTag">
-            <summary>
-            Used to create a MAT-file style tag
-            </summary>
-            <author>David Zier (david.zier@gmail.com)</author>
-        </member>
-        <member name="F:csmatio.io.MatTag._type">
-            <summary>
-            The array type for this tag.
-            </summary>
-        </member>
-        <member name="F:csmatio.io.MatTag._size">
-            <summary>
-            The size of the tag.
-            </summary>
-        </member>
-        <member name="M:csmatio.io.MatTag.#ctor(System.Int32,System.Int32)">
-            <summary>
-            Create a new MAT-file tag object.
-            </summary>
-            <param name="Type">The type of the array for this tag</param>
-            <param name="Size">The size of the tag</param>
-        </member>
-        <member name="M:csmatio.io.MatTag.GetPadding(System.Int32,System.Boolean)">
-            <summary>
-            Calculate the padding for the element.
-            </summary>
-            <param name="size">The size of the element.</param>
-            <param name="compressed">Is the tag compressed?</param>
-            <returns>The number of padding bytes</returns>
-        </member>
-        <member name="M:csmatio.io.MatTag.ToString">
-            <summary>
-            <see cref="M:System.Object.ToString"/>
-            </summary>
-        </member>
-        <member name="M:csmatio.io.MatTag.SizeOf">
-            <summary>
-            Get size of single data in this tag.
-            </summary>
-            <returns>The number of bytes for single data</returns>
-        </member>
-        <member name="P:csmatio.io.MatTag.Type">
-            <summary>
-            Get the type of the MatTag
-            </summary>
-        </member>
-        <member name="P:csmatio.io.MatTag.Size">
-            <summary>
-            Get the number of bytes for the MAT-Data object
-            </summary>
-        </member>
         <member name="T:csmatio.types.MLInt16">
             <summary>
             This class represents an Int16 (long) array (matrix)
             </summary>
             <author>David Zier (david.zier@gmail.com)</author>
         </member>
-        <member name="M:csmatio.types.MLInt16.#ctor(System.String,System.Int32[],System.Int32,System.Int32)">
+        <member name="T:csmatio.types.MLNumericArray`1">
             <summary>
-            Normally this constructor is used only by <c>MatFileReader</c> and <c>MatFileWriter</c>
+            Abstract class for numeric arrays.
             </summary>
-            <param name="Name">Array name</param>
-            <param name="Dims">Array dimensions</param>
-            <param name="Type">Array type: here <c>mxINT64_CLASS</c></param>
-            <param name="Attributes">Array flags</param>
-        </member>
-        <member name="M:csmatio.types.MLInt16.#ctor(System.String,System.Int32[])">
-            <summary>
-            Create a <c>MLInt64</c> array with given name and dimensions.
-            </summary>
-            <param name="Name">Array name</param>
-            <param name="Dims">Array dimensions</param>
-        </member>
-        <member name="M:csmatio.types.MLInt16.#ctor(System.String,System.Int16[],System.Int32)">
-            <summary>
-            <a href="http://math.nist.gov/javanumerics/jama/">Jama</a> [math.nist.gov] style:
-            construct a 2D real matrix from a one-dimensional packed array.
-            </summary>
-            <param name="Name">Array name</param>
-            <param name="vals">One-dimensional array of <c>long</c>, packed by columns</param>
-            <param name="m">Number of rows</param>
-        </member>
-        <member name="M:csmatio.types.MLInt16.#ctor(System.String,System.Int16[][])">
-            <summary>
-            <a href="http://math.nist.gov/javanumerics/jama/">Jama</a> [math.nist.gov] style:
-            construct a 2D real matrix from <c>long[][]</c>.
-            </summary>
-            <remarks>Note: Array is converted to <c>long[]</c></remarks>
-            <param name="Name">Array name</param>
-            <param name="vals">Two-dimensional array of values</param>
-        </member>
-        <member name="M:csmatio.types.MLInt16.#ctor(System.String,System.Int16[],System.Int16[],System.Int32)">
-            <summary>
-            <a href="http://math.nist.gov/javanumerics/jama/">Jama</a> [math.nist.gov] style:
-            construct a 2D imaginary matrix from a one-dimensional packed array.
-            </summary>
-            <param name="Name">Array name</param>
-            <param name="Real">One-dimensional array of <c>long</c> for <i>real</i> values, packed by columns</param>
-            <param name="Imag">One-dimensional array of <c>long</c> for <i>imaginary</i> values, packed by columns</param>
-            <param name="M">Number of rows</param>
-        </member>
-        <member name="M:csmatio.types.MLInt16.#ctor(System.String,System.Int16[][],System.Int16[][])">
-            <summary>
-            <a href="http://math.nist.gov/javanumerics/jama/">Jama</a> [math.nist.gov] style:
-            construct a 2D imaginary matrix from a one-dimensional packed array.
-            </summary>
-            <param name="Name">Array name</param>
-            <param name="Real">One-dimensional array of <c>long</c> for <i>real</i> values, packed by columns</param>
-            <param name="Imag">One-dimensional array of <c>long</c> for <i>imaginary</i> values, packed by columns</param>
-        </member>
-        <member name="M:csmatio.types.MLInt16.CreateArray(System.Int32,System.Int32)">
-            <summary>
-            Creates a generic byte array.
-            </summary>
-            <param name="m">The number of columns in the array</param>
-            <param name="n">The number of rows in the array</param>
-            <returns>A generic array.</returns>
-        </member>
-        <member name="M:csmatio.types.MLInt16.GetArray">
-            <summary>
-            Gets a two-dimensional array.
-            </summary>
-            <returns>2D real array.</returns>
-        </member>
-        <member name="M:csmatio.types.MLInt16.Short2DToShort(System.Int16[][])">
-            <summary>
-            Converts short[][] to short[]
-            </summary>
-            <param name="dd"></param>
-            <returns></returns>
-        </member>
-        <member name="P:csmatio.types.MLInt16.GetBytesAllocated">
-            <summary>
-            Gets the number of bytes allocated for a type
-            </summary>
-        </member>
-        <member name="M:csmatio.types.MLInt16.BuildFromBytes(System.Byte[])">
-            <summary>
-            Builds a numeric object from a byte array.
-            </summary>
-            <param name="bytes">A byte array containing the data.</param>
-            <returns>A numeric object</returns>
-        </member>
-        <member name="P:csmatio.types.MLInt16.GetStorageType">
-            <summary>
-            Gets the type of numeric object that this byte storage represents
-            </summary>
-        </member>
-        <member name="M:csmatio.types.MLInt16.GetByteArray(System.Object)">
-            <summary>
-            Gets a <c>byte[]</c> for a particular long value.
-            </summary>
-            <param name="val">The long value</param>
-            <returns>A byte array</returns>
-        </member>
-        <member name="T:csmatio.types.ByteStorageSupport">
-            <summary>
-            A public interface for storing and manipulating byte arrays
-            </summary>
-        </member>
-        <member name="P:csmatio.types.ByteStorageSupport.GetBytesAllocated">
-            <summary>
-            Gets the number of bytes allocated for a type
-            </summary>
-        </member>
-        <member name="M:csmatio.types.ByteStorageSupport.BuildFromBytes(System.Byte[])">
-            <summary>
-            Builds a numeric object from a byte array.
-            </summary>
-            <param name="bytes">A byte array containing the data.</param>
-            <returns>A numeric object</returns>
-        </member>
-        <member name="M:csmatio.types.ByteStorageSupport.GetByteArray(System.Object)">
-            <summary>
-            Gets a byte array from a numeric object.
-            </summary>
-            <param name="val">The numeric object to convert into a byte array.</param>
-        </member>
-        <member name="P:csmatio.types.ByteStorageSupport.GetStorageType">
-            <summary>
-            Gets the type of numeric object that this byte storage represents
-            </summary>
-        </member>
-        <member name="T:csmatio.types.GenericArrayCreator`1">
-            <summary>
-            Interface used to create a generic array GenericArrayCreator.
-            </summary>
-            <typeparam name="T">Generic Type for the array.</typeparam>
-        </member>
-        <member name="M:csmatio.types.GenericArrayCreator`1.CreateArray(System.Int32,System.Int32)">
-            <summary>
-            Creates a generic array.
-            </summary>
-            <param name="m">The number of columns in the array</param>
-            <param name="n">The number of rows in the array</param>
-            <returns>A generic array.</returns>
+            <author>David Zier (david.zier@gmail.com)</author>
         </member>
         <member name="T:csmatio.types.MLArray">
             <summary>
@@ -1212,17 +1078,44 @@
             <param name="type">The Matlab Array Type</param>
             <param name="attributes">Attribute parameters for the array.</param>
         </member>
-        <member name="P:csmatio.types.MLArray.Name">
-            <summary>Gets the name of the array.</summary>
-        </member>
-        <member name="P:csmatio.types.MLArray.Flags">
-            <summary>Gets the flags for this array.</summary>
-        </member>
         <member name="M:csmatio.types.MLArray.GetNameToByteArray">
             <summary>
             Converts the name string into a byte array and returns it.
             </summary>
             <returns>A byte array.</returns>
+        </member>
+        <member name="M:csmatio.types.MLArray.TypeToString(System.Int32)">
+            <summary>
+            Converts a Matlab Array Class type into a string representation.
+            </summary>
+            <param name="type">A Matlab Array Class type</param>
+            <returns>A string representation.</returns>
+        </member>
+        <member name="M:csmatio.types.MLArray.GetIndex(System.Int32,System.Int32)">
+            <summary>
+            Get the index into the byte array.
+            </summary>
+            <param name="m">The m index of an MxN array.</param>
+            <param name="n">The n index of an MxN array.</param>
+            <returns>An index into the byte array.</returns>
+        </member>
+        <member name="M:csmatio.types.MLArray.ToString">
+            <summary>
+            A string representation for this MLArray object
+            </summary>
+            <returns>A string representation.</returns>
+        </member>
+        <member name="M:csmatio.types.MLArray.ContentToString">
+            <summary>
+            Get a string representation for the content of the array.
+            </summary>
+            <returns>A string representation.</returns>
+        </member>
+        <member name="P:csmatio.types.MLArray.Name">
+            <summary>Gets the name of the array.</summary>
+        </member>
+        <member name="P:csmatio.types.MLArray.Flags">
+            <summary>Gets the flags for this array.</summary>
         </member>
         <member name="P:csmatio.types.MLArray.Dimensions">
             <summary>
@@ -1254,13 +1147,6 @@
             <summary>
             Is the array empty?
             </summary>
-        </member>
-        <member name="M:csmatio.types.MLArray.TypeToString(System.Int32)">
-            <summary>
-            Converts a Matlab Array Class type into a string representation.
-            </summary>
-            <param name="type">A Matlab Array Class type</param>
-            <returns>A string representation.</returns>
         </member>
         <member name="P:csmatio.types.MLArray.IsCell">
             <summary>Is Array a Cell Class Type?</summary>
@@ -1322,25 +1208,368 @@
         <member name="P:csmatio.types.MLArray.IsUnknown">
             <summary>Is Array an Unknown Type?</summary>
         </member>
-        <member name="M:csmatio.types.MLArray.GetIndex(System.Int32,System.Int32)">
+        <member name="T:csmatio.types.GenericArrayCreator`1">
             <summary>
-            Get the index into the byte array.
+            Interface used to create a generic array GenericArrayCreator.
             </summary>
-            <param name="m">The m index of an MxN array.</param>
-            <param name="n">The n index of an MxN array.</param>
-            <returns>An index into the byte array.</returns>
+            <typeparam name="T">Generic Type for the array.</typeparam>
         </member>
-        <member name="M:csmatio.types.MLArray.ToString">
+        <member name="M:csmatio.types.GenericArrayCreator`1.CreateArray(System.Int32,System.Int32)">
             <summary>
-            A string representation for this MLArray object
+            Creates a generic array.
             </summary>
-            <returns>A string representation.</returns>
+            <param name="m">The number of columns in the array</param>
+            <param name="n">The number of rows in the array</param>
+            <returns>A generic array.</returns>
         </member>
-        <member name="M:csmatio.types.MLArray.ContentToString">
+        <member name="T:csmatio.types.ByteStorageSupport">
+            <summary>
+            A public interface for storing and manipulating byte arrays
+            </summary>
+        </member>
+        <member name="M:csmatio.types.ByteStorageSupport.BuildFromBytes(System.Byte[])">
+            <summary>
+            Builds a numeric object from a byte array.
+            </summary>
+            <param name="bytes">A byte array containing the data.</param>
+            <returns>A numeric object</returns>
+        </member>
+        <member name="M:csmatio.types.ByteStorageSupport.GetByteArray(System.Object)">
+            <summary>
+            Gets a byte array from a numeric object.
+            </summary>
+            <param name="val">The numeric object to convert into a byte array.</param>
+        </member>
+        <member name="P:csmatio.types.ByteStorageSupport.GetBytesAllocated">
+            <summary>
+            Gets the number of bytes allocated for a type
+            </summary>
+        </member>
+        <member name="P:csmatio.types.ByteStorageSupport.GetStorageType">
+            <summary>
+            Gets the type of numeric object that this byte storage represents
+            </summary>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.#ctor(System.String,System.Int32[],System.Int32,System.Int32)">
+            <summary>
+            Constructs an abstract MLNumericArray class object
+            </summary>
+            <param name="Name">The name of the numeric array.</param>
+            <param name="Dims">The dimensions of the numeric array.</param>
+            <param name="Type">The Matlab Array Class type for this array.</param>
+            <param name="Attributes">Any attributes associated with this array.</param>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.#ctor(System.String,System.Int32,`0[],System.Int32)">
+            <summary>
+            <a href="http://math.nist.gov/javanumerics/jama/">Jama</a> [math.nist.gov] style:
+            construct a 2D real matrix from a one-dimensional packed array.
+            </summary>
+            <param name="Name">The name of the numeric array.</param>
+            <param name="Type">The Matlab Array Class type for this array.</param>
+            <param name="Vals">One-dimensional array of doubles, packed by columns.</param>
+            <param name="M">The number of rows.</param>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.#ctor(System.String,System.Int32,`0[],`0[],System.Int32)">
+            <summary>
+            <a href="http://math.nist.gov/javanumerics/jama/">Jama</a> [math.nist.gov] style:
+            construct a 2D imaginary matrix from a one-dimensional packed array.
+            </summary>
+            <param name="Name">The name of the numeric array.</param>
+            <param name="Type">The Matlab Array Class type for this array.</param>
+            <param name="RealVals">One-dimensional array of doubles for the <i>real</i> part, 
+            packed by columns</param>
+            <param name="ImagVals">One-dimensional array of doubles for the <i>imaginary</i> part, 
+            packed by columns</param>
+            <param name="M">The number of columns</param>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.GetReal(System.Int32,System.Int32)">
+            <summary>
+            Gets a single real array element of A(m,n).
+            </summary>
+            <param name="M">Row index</param>
+            <param name="N">Column index</param>
+            <returns>Array Element</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.GetReal">
+            <summary>
+            Gets the <c>ByteBuffer</c> for the Real Numbers.
+            </summary>
+            <returns>The real buffer</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.GetReal(System.Int32)">
+            <summary>
+            Get a single real array element
+            </summary>
+            <param name="Index">Column-packed vector index.</param>
+            <returns>Array Element.</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.SetReal(`0,System.Int32,System.Int32)">
+            <summary>
+            Sets a single real array element.
+            </summary>
+            <param name="Val">The element value.</param>
+            <param name="M">The row index.</param>
+            <param name="N">The column index.</param>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.SetReal(`0,System.Int32)">
+            <summary>
+            Sets a single real array element.
+            </summary>
+            <param name="Val">The element value.</param>
+            <param name="Index">Column-packed vector index.</param>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.SetImaginary(`0,System.Int32,System.Int32)">
+            <summary>
+            Sets a single imaginary array element.
+            </summary>
+            <param name="Val">Element value.</param>
+            <param name="M">Row Index.</param>
+            <param name="N">Column Index.</param>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.SetImaginary(`0,System.Int32)">
+            <summary>
+            Sets a single imaginary array element.
+            </summary>
+            <param name="Val">Element Value</param>
+            <param name="Index">Column-packed vector index.</param>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.GetImaginary(System.Int32,System.Int32)">
+            <summary>
+            Gets a single imaginary array element of A(m,n)
+            </summary>
+            <param name="M">Row index</param>
+            <param name="N">Column index</param>
+            <returns>Array element</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.GetImaginary(System.Int32)">
+            <summary>
+            Gets a single imaginary array element.
+            </summary>
+            <param name="Index">Column-packed vector index</param>
+            <returns>Array Element</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.GetImaginary">
+            <summary>
+            Gets the <c>ByteBuffer</c> for the Real Numbers.
+            </summary>
+            <returns>The real buffer</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.Set(`0,System.Int32,System.Int32)">
+            <summary>
+            Does the same as <c>SetReal</c>.
+            </summary>
+            <param name="Val">Element Value</param>
+            <param name="M">Row index</param>
+            <param name="N">Column index</param>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.Set(`0,System.Int32)">
+            <summary>
+            Does the same as <c>SetReal</c>.
+            </summary>
+            <param name="Val">Element Value</param>
+            <param name="Index">Column-packed vector index</param>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.Get(System.Int32,System.Int32)">
+            <summary>
+            Does the same as <c>GetReal</c>.
+            </summary>
+            <param name="M">Row index</param>
+            <param name="N">Column index</param>
+            <returns>An array element value.</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.Get(System.Int32)">
+            <summary>
+            Does the same as <c>GetReal</c>.
+            </summary>
+            <param name="Index">Column-packed vector index</param>
+            <returns>An array element value.</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1._Get(csmatio.common.ByteBuffer,System.Int32)">
+            <summary>
+            Gets a single objects data from a <c>ByteBuffer</c>.
+            </summary>
+            <param name="Buffer">The <c>ByteBuffer</c> object.</param>
+            <param name="Index">A column-packed index.</param>
+            <returns>The object data.</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1._Set(csmatio.common.ByteBuffer,`0,System.Int32)">
+            <summary>
+            Sets a single object data into a <c>ByteBuffer</c>
+            </summary>
+            <param name="Buffer">The <c>ByteBuffer</c> to where the object data will be stored.</param>
+            <param name="Val">The object data.</param>
+            <param name="Index">A column-packed index</param>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.ContentToString">
             <summary>
             Get a string representation for the content of the array.
+            See <see cref="M:csmatio.types.MLArray.ContentToString"/>
             </summary>
             <returns>A string representation.</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.Equals(System.Object)">
+            <summary>
+            Overridden equals operator, see <see cref="M:System.Object.Equals(System.Object)"/>
+            </summary>
+            <param name="o">A <c>System.Object</c> to be compared with.</param>
+            <returns>True if the object match.</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.GetHashCode">
+            <summary>
+            Serves as a hash function for an MLNumericArray.
+            </summary>
+            <returns>A hashcode for this object</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.DirectByteBufferEquals(csmatio.common.ByteBuffer,csmatio.common.ByteBuffer)">
+            <summary>
+            Equals implementation for a direct <c>ByteBuffer</c>
+            </summary>
+            <param name="buffa">The source buffer to be compared.</param>
+            <param name="buffb">The destination buffer to be compared.</param>
+            <returns><c>true</c> if buffers are equal in terms of content.</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.CreateArray(System.Int32,System.Int32)">
+            <summary>
+            Creates a generic array.
+            </summary>
+            <param name="m">The number of columns in the array</param>
+            <param name="n">The number of rows in the array</param>
+            <returns>A generic array.</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.BuildFromBytes(System.Byte[])">
+            <summary>
+            Builds a numeric object from a byte array.
+            </summary>
+            <param name="bytes">A byte array containing the data.</param>
+            <returns>A numeric object</returns>
+        </member>
+        <member name="M:csmatio.types.MLNumericArray`1.GetByteArray(System.Object)">
+            <summary>
+            Gets a byte array from a numeric object.
+            </summary>
+            <param name="val">The numeric object to convert into a byte array.</param>
+        </member>
+        <member name="P:csmatio.types.MLNumericArray`1.Flags">
+            <summary>Gets the flags for this array.</summary>
+        </member>
+        <member name="P:csmatio.types.MLNumericArray`1.ImaginaryByteBuffer">
+            <summary>
+            Gets the imaginary part of the number array.
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLNumericArray`1.RealByteBuffer">
+            <summary>
+            Gets the <c>ByteBuffer</c> for the real numbers in the 
+            array.
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLNumericArray`1.GetBytesAllocated">
+            <summary>
+            Gets the number of bytes allocated for a type
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLNumericArray`1.GetStorageType">
+            <summary>
+            Gets the type of numeric object that this byte storage represents
+            </summary>
+        </member>
+        <member name="M:csmatio.types.MLInt16.#ctor(System.String,System.Int32[],System.Int32,System.Int32)">
+            <summary>
+            Normally this constructor is used only by <c>MatFileReader</c> and <c>MatFileWriter</c>
+            </summary>
+            <param name="Name">Array name</param>
+            <param name="Dims">Array dimensions</param>
+            <param name="Type">Array type: here <c>mxINT64_CLASS</c></param>
+            <param name="Attributes">Array flags</param>
+        </member>
+        <member name="M:csmatio.types.MLInt16.#ctor(System.String,System.Int32[])">
+            <summary>
+            Create a <c>MLInt64</c> array with given name and dimensions.
+            </summary>
+            <param name="Name">Array name</param>
+            <param name="Dims">Array dimensions</param>
+        </member>
+        <member name="M:csmatio.types.MLInt16.#ctor(System.String,System.Int16[],System.Int32)">
+            <summary>
+            <a href="http://math.nist.gov/javanumerics/jama/">Jama</a> [math.nist.gov] style:
+            construct a 2D real matrix from a one-dimensional packed array.
+            </summary>
+            <param name="Name">Array name</param>
+            <param name="vals">One-dimensional array of <c>long</c>, packed by columns</param>
+            <param name="m">Number of rows</param>
+        </member>
+        <member name="M:csmatio.types.MLInt16.#ctor(System.String,System.Int16[][])">
+            <summary>
+            <a href="http://math.nist.gov/javanumerics/jama/">Jama</a> [math.nist.gov] style:
+            construct a 2D real matrix from <c>long[][]</c>.
+            </summary>
+            <remarks>Note: Array is converted to <c>long[]</c></remarks>
+            <param name="Name">Array name</param>
+            <param name="vals">Two-dimensional array of values</param>
+        </member>
+        <member name="M:csmatio.types.MLInt16.#ctor(System.String,System.Int16[],System.Int16[],System.Int32)">
+            <summary>
+            <a href="http://math.nist.gov/javanumerics/jama/">Jama</a> [math.nist.gov] style:
+            construct a 2D imaginary matrix from a one-dimensional packed array.
+            </summary>
+            <param name="Name">Array name</param>
+            <param name="Real">One-dimensional array of <c>long</c> for <i>real</i> values, packed by columns</param>
+            <param name="Imag">One-dimensional array of <c>long</c> for <i>imaginary</i> values, packed by columns</param>
+            <param name="M">Number of rows</param>
+        </member>
+        <member name="M:csmatio.types.MLInt16.#ctor(System.String,System.Int16[][],System.Int16[][])">
+            <summary>
+            <a href="http://math.nist.gov/javanumerics/jama/">Jama</a> [math.nist.gov] style:
+            construct a 2D imaginary matrix from a one-dimensional packed array.
+            </summary>
+            <param name="Name">Array name</param>
+            <param name="Real">One-dimensional array of <c>long</c> for <i>real</i> values, packed by columns</param>
+            <param name="Imag">One-dimensional array of <c>long</c> for <i>imaginary</i> values, packed by columns</param>
+        </member>
+        <member name="M:csmatio.types.MLInt16.CreateArray(System.Int32,System.Int32)">
+            <summary>
+            Creates a generic byte array.
+            </summary>
+            <param name="m">The number of columns in the array</param>
+            <param name="n">The number of rows in the array</param>
+            <returns>A generic array.</returns>
+        </member>
+        <member name="M:csmatio.types.MLInt16.GetArray">
+            <summary>
+            Gets a two-dimensional array.
+            </summary>
+            <returns>2D real array.</returns>
+        </member>
+        <member name="M:csmatio.types.MLInt16.Short2DToShort(System.Int16[][])">
+            <summary>
+            Converts short[][] to short[]
+            </summary>
+            <param name="dd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:csmatio.types.MLInt16.BuildFromBytes(System.Byte[])">
+            <summary>
+            Builds a numeric object from a byte array.
+            </summary>
+            <param name="bytes">A byte array containing the data.</param>
+            <returns>A numeric object</returns>
+        </member>
+        <member name="M:csmatio.types.MLInt16.GetByteArray(System.Object)">
+            <summary>
+            Gets a <c>byte[]</c> for a particular long value.
+            </summary>
+            <param name="val">The long value</param>
+            <returns>A byte array</returns>
+        </member>
+        <member name="P:csmatio.types.MLInt16.GetBytesAllocated">
+            <summary>
+            Gets the number of bytes allocated for a type
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLInt16.GetStorageType">
+            <summary>
+            Gets the type of numeric object that this byte storage represents
+            </summary>
         </member>
         <member name="T:csmatio.types.MLCell">
             <summary>
@@ -1364,6 +1593,12 @@
             <param name="Type">Array type: here <c>mxDOUBLE_CLASS</c></param>
             <param name="Attributes">Array flags</param>
         </member>
+        <member name="M:csmatio.types.MLCell.ContentToString">
+            <summary>
+            Get a string representation for the content of the array.
+            </summary>
+            <returns>A string representation.</returns>
+        </member>
         <member name="P:csmatio.types.MLCell.Item(System.Int32,System.Int32)">
             <summary>
             Public accessor to the cell array for 2-dimensions.
@@ -1378,12 +1613,6 @@
             <summary>
             Public Get Accessor for the cells array list
             </summary>
-        </member>
-        <member name="M:csmatio.types.MLCell.ContentToString">
-            <summary>
-            Get a string representation for the content of the array.
-            </summary>
-            <returns>A string representation.</returns>
         </member>
         <member name="T:csmatio.types.MLChar">
             <summary>
@@ -1550,11 +1779,6 @@
             <param name="dd"></param>
             <returns></returns>
         </member>
-        <member name="P:csmatio.types.MLDouble.GetBytesAllocated">
-            <summary>
-            Gets the number of bytes allocated for a type
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLDouble.BuildFromBytes(System.Byte[])">
             <summary>
             Builds a numeric object from a byte array.
@@ -1562,17 +1786,22 @@
             <param name="bytes">A byte array containing the data.</param>
             <returns>A numeric object</returns>
         </member>
-        <member name="P:csmatio.types.MLDouble.GetStorageType">
-            <summary>
-            Gets the type of numeric object that this byte storage represents
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLDouble.GetByteArray(System.Object)">
             <summary>
             Gets a <c>byte[]</c> for a particular double value.
             </summary>
             <param name="val">The double value</param>
             <returns>A byte array</returns>
+        </member>
+        <member name="P:csmatio.types.MLDouble.GetBytesAllocated">
+            <summary>
+            Gets the number of bytes allocated for a type
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLDouble.GetStorageType">
+            <summary>
+            Gets the type of numeric object that this byte storage represents
+            </summary>
         </member>
         <member name="T:csmatio.types.MLEmptyArray">
             <summary>
@@ -1680,11 +1909,6 @@
             <param name="dd"></param>
             <returns></returns>
         </member>
-        <member name="P:csmatio.types.MLInt32.GetBytesAllocated">
-            <summary>
-            Gets the number of bytes allocated for a type
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLInt32.BuildFromBytes(System.Byte[])">
             <summary>
             Builds a numeric object from a byte array.
@@ -1692,17 +1916,22 @@
             <param name="bytes">A byte array containing the data.</param>
             <returns>A numeric object</returns>
         </member>
-        <member name="P:csmatio.types.MLInt32.GetStorageType">
-            <summary>
-            Gets the type of numeric object that this byte storage represents
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLInt32.GetByteArray(System.Object)">
             <summary>
             Gets a <c>byte[]</c> for a particular long value.
             </summary>
             <param name="val">The long value</param>
             <returns>A byte array</returns>
+        </member>
+        <member name="P:csmatio.types.MLInt32.GetBytesAllocated">
+            <summary>
+            Gets the number of bytes allocated for a type
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLInt32.GetStorageType">
+            <summary>
+            Gets the type of numeric object that this byte storage represents
+            </summary>
         </member>
         <member name="T:csmatio.types.MLInt64">
             <summary>
@@ -1796,11 +2025,6 @@
             <param name="dd"><c>long[]</c></param>
             <returns><c>double[]</c></returns>
         </member>
-        <member name="P:csmatio.types.MLInt64.GetBytesAllocated">
-            <summary>
-            Gets the number of bytes allocated for a type
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLInt64.BuildFromBytes(System.Byte[])">
             <summary>
             Builds a numeric object from a byte array.
@@ -1808,17 +2032,22 @@
             <param name="bytes">A byte array containing the data.</param>
             <returns>A numeric object</returns>
         </member>
-        <member name="P:csmatio.types.MLInt64.GetStorageType">
-            <summary>
-            Gets the type of numeric object that this byte storage represents
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLInt64.GetByteArray(System.Object)">
             <summary>
             Gets a <c>byte[]</c> for a particular long value.
             </summary>
             <param name="val">The long value</param>
             <returns>A byte array</returns>
+        </member>
+        <member name="P:csmatio.types.MLInt64.GetBytesAllocated">
+            <summary>
+            Gets the number of bytes allocated for a type
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLInt64.GetStorageType">
+            <summary>
+            Gets the type of numeric object that this byte storage represents
+            </summary>
         </member>
         <member name="T:csmatio.types.MLInt8">
             <summary>
@@ -1913,11 +2142,6 @@
             </summary>
             <param name="val">The numeric object to convert into a byte array.</param>
         </member>
-        <member name="P:csmatio.types.MLInt8.GetBytesAllocated">
-            <summary>
-            Gets the number of bytes allocated for a type
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLInt8.BuildFromBytes(System.Byte[])">
             <summary>
             Builds a numeric object from a byte array.
@@ -1925,236 +2149,12 @@
             <param name="bytes">A byte array containing the data.</param>
             <returns>A numeric object</returns>
         </member>
-        <member name="P:csmatio.types.MLInt8.GetStorageType">
-            <summary>
-            Gets the type of numeric object that this byte storage represents
-            </summary>
-        </member>
-        <member name="T:csmatio.types.MLNumericArray`1">
-            <summary>
-            Abstract class for numeric arrays.
-            </summary>
-            <author>David Zier (david.zier@gmail.com)</author>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.#ctor(System.String,System.Int32[],System.Int32,System.Int32)">
-            <summary>
-            Constructs an abstract MLNumericArray class object
-            </summary>
-            <param name="Name">The name of the numeric array.</param>
-            <param name="Dims">The dimensions of the numeric array.</param>
-            <param name="Type">The Matlab Array Class type for this array.</param>
-            <param name="Attributes">Any attributes associated with this array.</param>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.#ctor(System.String,System.Int32,`0[],System.Int32)">
-            <summary>
-            <a href="http://math.nist.gov/javanumerics/jama/">Jama</a> [math.nist.gov] style:
-            construct a 2D real matrix from a one-dimensional packed array.
-            </summary>
-            <param name="Name">The name of the numeric array.</param>
-            <param name="Type">The Matlab Array Class type for this array.</param>
-            <param name="Vals">One-dimensional array of doubles, packed by columns.</param>
-            <param name="M">The number of rows.</param>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.#ctor(System.String,System.Int32,`0[],`0[],System.Int32)">
-            <summary>
-            <a href="http://math.nist.gov/javanumerics/jama/">Jama</a> [math.nist.gov] style:
-            construct a 2D imaginary matrix from a one-dimensional packed array.
-            </summary>
-            <param name="Name">The name of the numeric array.</param>
-            <param name="Type">The Matlab Array Class type for this array.</param>
-            <param name="RealVals">One-dimensional array of doubles for the <i>real</i> part, 
-            packed by columns</param>
-            <param name="ImagVals">One-dimensional array of doubles for the <i>imaginary</i> part, 
-            packed by columns</param>
-            <param name="M">The number of columns</param>
-        </member>
-        <member name="P:csmatio.types.MLNumericArray`1.Flags">
-            <summary>Gets the flags for this array.</summary>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.GetReal(System.Int32,System.Int32)">
-            <summary>
-            Gets a single real array element of A(m,n).
-            </summary>
-            <param name="M">Row index</param>
-            <param name="N">Column index</param>
-            <returns>Array Element</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.GetReal">
-            <summary>
-            Gets the <c>ByteBuffer</c> for the Real Numbers.
-            </summary>
-            <returns>The real buffer</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.GetReal(System.Int32)">
-            <summary>
-            Get a single real array element
-            </summary>
-            <param name="Index">Column-packed vector index.</param>
-            <returns>Array Element.</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.SetReal(`0,System.Int32,System.Int32)">
-            <summary>
-            Sets a single real array element.
-            </summary>
-            <param name="Val">The element value.</param>
-            <param name="M">The row index.</param>
-            <param name="N">The column index.</param>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.SetReal(`0,System.Int32)">
-            <summary>
-            Sets a single real array element.
-            </summary>
-            <param name="Val">The element value.</param>
-            <param name="Index">Column-packed vector index.</param>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.SetImaginary(`0,System.Int32,System.Int32)">
-            <summary>
-            Sets a single imaginary array element.
-            </summary>
-            <param name="Val">Element value.</param>
-            <param name="M">Row Index.</param>
-            <param name="N">Column Index.</param>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.SetImaginary(`0,System.Int32)">
-            <summary>
-            Sets a single imaginary array element.
-            </summary>
-            <param name="Val">Element Value</param>
-            <param name="Index">Column-packed vector index.</param>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.GetImaginary(System.Int32,System.Int32)">
-            <summary>
-            Gets a single imaginary array element of A(m,n)
-            </summary>
-            <param name="M">Row index</param>
-            <param name="N">Column index</param>
-            <returns>Array element</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.GetImaginary(System.Int32)">
-            <summary>
-            Gets a single imaginary array element.
-            </summary>
-            <param name="Index">Column-packed vector index</param>
-            <returns>Array Element</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.GetImaginary">
-            <summary>
-            Gets the <c>ByteBuffer</c> for the Real Numbers.
-            </summary>
-            <returns>The real buffer</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.Set(`0,System.Int32,System.Int32)">
-            <summary>
-            Does the same as <c>SetReal</c>.
-            </summary>
-            <param name="Val">Element Value</param>
-            <param name="M">Row index</param>
-            <param name="N">Column index</param>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.Set(`0,System.Int32)">
-            <summary>
-            Does the same as <c>SetReal</c>.
-            </summary>
-            <param name="Val">Element Value</param>
-            <param name="Index">Column-packed vector index</param>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.Get(System.Int32,System.Int32)">
-            <summary>
-            Does the same as <c>GetReal</c>.
-            </summary>
-            <param name="M">Row index</param>
-            <param name="N">Column index</param>
-            <returns>An array element value.</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.Get(System.Int32)">
-            <summary>
-            Does the same as <c>GetReal</c>.
-            </summary>
-            <param name="Index">Column-packed vector index</param>
-            <returns>An array element value.</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1._Get(csmatio.common.ByteBuffer,System.Int32)">
-            <summary>
-            Gets a single objects data from a <c>ByteBuffer</c>.
-            </summary>
-            <param name="Buffer">The <c>ByteBuffer</c> object.</param>
-            <param name="Index">A column-packed index.</param>
-            <returns>The object data.</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1._Set(csmatio.common.ByteBuffer,`0,System.Int32)">
-            <summary>
-            Sets a single object data into a <c>ByteBuffer</c>
-            </summary>
-            <param name="Buffer">The <c>ByteBuffer</c> to where the object data will be stored.</param>
-            <param name="Val">The object data.</param>
-            <param name="Index">A column-packed index</param>
-        </member>
-        <member name="P:csmatio.types.MLNumericArray`1.ImaginaryByteBuffer">
-            <summary>
-            Gets the imaginary part of the number array.
-            </summary>
-        </member>
-        <member name="P:csmatio.types.MLNumericArray`1.RealByteBuffer">
-            <summary>
-            Gets the <c>ByteBuffer</c> for the real numbers in the 
-            array.
-            </summary>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.ContentToString">
-            <summary>
-            Get a string representation for the content of the array.
-            See <see cref="M:csmatio.types.MLArray.ContentToString"/>
-            </summary>
-            <returns>A string representation.</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.Equals(System.Object)">
-            <summary>
-            Overridden equals operator, see <see cref="M:System.Object.Equals(System.Object)"/>
-            </summary>
-            <param name="o">A <c>System.Object</c> to be compared with.</param>
-            <returns>True if the object match.</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.GetHashCode">
-            <summary>
-            Serves as a hash function for an MLNumericArray.
-            </summary>
-            <returns>A hashcode for this object</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.DirectByteBufferEquals(csmatio.common.ByteBuffer,csmatio.common.ByteBuffer)">
-            <summary>
-            Equals implementation for a direct <c>ByteBuffer</c>
-            </summary>
-            <param name="buffa">The source buffer to be compared.</param>
-            <param name="buffb">The destination buffer to be compared.</param>
-            <returns><c>true</c> if buffers are equal in terms of content.</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.CreateArray(System.Int32,System.Int32)">
-            <summary>
-            Creates a generic array.
-            </summary>
-            <param name="m">The number of columns in the array</param>
-            <param name="n">The number of rows in the array</param>
-            <returns>A generic array.</returns>
-        </member>
-        <member name="P:csmatio.types.MLNumericArray`1.GetBytesAllocated">
+        <member name="P:csmatio.types.MLInt8.GetBytesAllocated">
             <summary>
             Gets the number of bytes allocated for a type
             </summary>
         </member>
-        <member name="M:csmatio.types.MLNumericArray`1.BuildFromBytes(System.Byte[])">
-            <summary>
-            Builds a numeric object from a byte array.
-            </summary>
-            <param name="bytes">A byte array containing the data.</param>
-            <returns>A numeric object</returns>
-        </member>
-        <member name="M:csmatio.types.MLNumericArray`1.GetByteArray(System.Object)">
-            <summary>
-            Gets a byte array from a numeric object.
-            </summary>
-            <param name="val">The numeric object to convert into a byte array.</param>
-        </member>
-        <member name="P:csmatio.types.MLNumericArray`1.GetStorageType">
+        <member name="P:csmatio.types.MLInt8.GetStorageType">
             <summary>
             Gets the type of numeric object that this byte storage represents
             </summary>
@@ -2239,22 +2239,12 @@
             <param name="dd"></param>
             <returns></returns>
         </member>
-        <member name="P:csmatio.types.MLSingle.GetBytesAllocated">
-            <summary>
-            Gets the number of bytes allocated for a type
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLSingle.BuildFromBytes(System.Byte[])">
             <summary>
             Builds a numeric object from a byte array.
             </summary>
             <param name="bytes">A byte array containing the data.</param>
             <returns>A numeric object</returns>
-        </member>
-        <member name="P:csmatio.types.MLSingle.GetStorageType">
-            <summary>
-            Gets the type of numeric object that this byte storage represents
-            </summary>
         </member>
         <member name="M:csmatio.types.MLSingle.GetByteArray(System.Object)">
             <summary>
@@ -2263,54 +2253,21 @@
             <param name="val">The double value</param>
             <returns>A byte array</returns>
         </member>
+        <member name="P:csmatio.types.MLSingle.GetBytesAllocated">
+            <summary>
+            Gets the number of bytes allocated for a type
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLSingle.GetStorageType">
+            <summary>
+            Gets the type of numeric object that this byte storage represents
+            </summary>
+        </member>
         <member name="T:csmatio.types.MLSparse">
             <summary>
             This class represents a Matlab Sparse matrix
             </summary>
             <author>David Zier (david.zier@gmail.com)</author>
-        </member>
-        <member name="T:csmatio.types.MLSparse.IndexMN">
-            <summary>
-            Matrix index (m,n)
-            </summary>
-            <author>David Zier (david.zier@gmail.com)</author>
-        </member>
-        <member name="M:csmatio.types.MLSparse.IndexMN.#ctor(System.Int32,System.Int32)">
-            <summary>
-            Construct a basic <c>IndexMN</c> object from
-            row and column indices.
-            </summary>
-            <param name="m">The row index</param>
-            <param name="n">The column index</param>
-        </member>
-        <member name="P:csmatio.types.MLSparse.IndexMN.M">
-            <summary>
-            Public accessor to the row index.
-            </summary>
-        </member>
-        <member name="P:csmatio.types.MLSparse.IndexMN.N">
-            <summary>
-            Public accessor to the column index.
-            </summary>
-        </member>
-        <member name="M:csmatio.types.MLSparse.IndexMN.GetHashCode">
-            <summary>
-            Serves as a hash function for an IndexMN.
-            </summary>
-            <returns>A hashcode for this object</returns>
-        </member>
-        <member name="M:csmatio.types.MLSparse.IndexMN.Equals(System.Object)">
-            <summary>
-            Overridden equals operator, see <see cref="M:System.Object.Equals(System.Object)"/>
-            </summary>
-            <param name="obj">A <c>System.Object</c> to be compared with.</param>
-            <returns>True if the object match.</returns>
-        </member>
-        <member name="M:csmatio.types.MLSparse.IndexMN.ToString">
-            <summary>
-            Get a string representation for this <c>IndexMN</c>.
-            </summary>
-            <returns>A <c>System.String</c></returns>
         </member>
         <member name="M:csmatio.types.MLSparse.#ctor(System.String,System.Int32[],System.Int32,System.Int32)">
             <summary>
@@ -2320,31 +2277,6 @@
             <param name="Dims">Array dimensions</param>
             <param name="Attributes">Array flags</param>
             <param name="nzMax">Maximum number of non-zero numbers</param>
-        </member>
-        <member name="P:csmatio.types.MLSparse.MaxNZ">
-            <summary>
-            Gets the maximum number of non-zero values.
-            </summary>
-        </member>
-        <member name="P:csmatio.types.MLSparse.IR">
-            <summary>
-            Gets row indices
-            </summary>
-            <remarks><c>IR</c> points to an integer array of length <c>MaxNZ</c> containing the 
-            row indices of the correspoding elements in <c>PR</c> and <c>PI</c></remarks>
-        </member>
-        <member name="P:csmatio.types.MLSparse.JC">
-            <summary>
-            Gets column indices.
-            </summary>
-            <remarks>
-            <c>JC</c> points to an integer array of length <c>N+1</c> that contains column index information.
-            For j, in the range of <c>0&lt;=j&lt;=N-1</c>, <c>JC[j]</c> is the index in the <c>IR</c> and <c>PI</c>
-            (and <c>PI</c> if it exists) of the first nonzero entry in the jth column and <c>JC[j+1]-1</c> index
-            of the last nonzero entry. As a result, <c>JC[N]</c> is also equal to <c>nnz</c>, the number of
-            nonzero entries in the matrix.  If <c>nnz</c> is less than <c>MaxNZ</c>, then more nonzero entries
-            can be inserted in the array without allocating additional storage.
-            </remarks>
         </member>
         <member name="M:csmatio.types.MLSparse.CreateArray(System.Int32,System.Int32)">
             <summary>
@@ -2434,20 +2366,12 @@
             </summary>
             <returns><c>System.Double</c> array</returns>
         </member>
-        <member name="P:csmatio.types.MLSparse.Flags">
-            <summary>Gets the flags for this array.</summary>
-        </member>
         <member name="M:csmatio.types.MLSparse.ContentToString">
             <summary>
             Get a string representation for the content of the array.
             See <see cref="M:csmatio.types.MLArray.ContentToString"/>
             </summary>
             <returns>A string representation.</returns>
-        </member>
-        <member name="P:csmatio.types.MLSparse.GetBytesAllocated">
-            <summary>
-            Gets the number of bytes allocated for a type
-            </summary>
         </member>
         <member name="M:csmatio.types.MLSparse.BuildFromBytes(System.Byte[])">
             <summary>
@@ -2464,9 +2388,85 @@
             </summary>
             <param name="val">The numeric object to convert into a byte array.</param>
         </member>
+        <member name="P:csmatio.types.MLSparse.MaxNZ">
+            <summary>
+            Gets the maximum number of non-zero values.
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLSparse.IR">
+            <summary>
+            Gets row indices
+            </summary>
+            <remarks><c>IR</c> points to an integer array of length <c>MaxNZ</c> containing the 
+            row indices of the correspoding elements in <c>PR</c> and <c>PI</c></remarks>
+        </member>
+        <member name="P:csmatio.types.MLSparse.JC">
+            <summary>
+            Gets column indices.
+            </summary>
+            <remarks>
+            <c>JC</c> points to an integer array of length <c>N+1</c> that contains column index information.
+            For j, in the range of <c>0&lt;=j&lt;=N-1</c>, <c>JC[j]</c> is the index in the <c>IR</c> and <c>PI</c>
+            (and <c>PI</c> if it exists) of the first nonzero entry in the jth column and <c>JC[j+1]-1</c> index
+            of the last nonzero entry. As a result, <c>JC[N]</c> is also equal to <c>nnz</c>, the number of
+            nonzero entries in the matrix.  If <c>nnz</c> is less than <c>MaxNZ</c>, then more nonzero entries
+            can be inserted in the array without allocating additional storage.
+            </remarks>
+        </member>
+        <member name="P:csmatio.types.MLSparse.Flags">
+            <summary>Gets the flags for this array.</summary>
+        </member>
+        <member name="P:csmatio.types.MLSparse.GetBytesAllocated">
+            <summary>
+            Gets the number of bytes allocated for a type
+            </summary>
+        </member>
         <member name="P:csmatio.types.MLSparse.GetStorageType">
             <summary>
             Gets the type of numeric object that this byte storage represents
+            </summary>
+        </member>
+        <member name="T:csmatio.types.MLSparse.IndexMN">
+            <summary>
+            Matrix index (m,n)
+            </summary>
+            <author>David Zier (david.zier@gmail.com)</author>
+        </member>
+        <member name="M:csmatio.types.MLSparse.IndexMN.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Construct a basic <c>IndexMN</c> object from
+            row and column indices.
+            </summary>
+            <param name="m">The row index</param>
+            <param name="n">The column index</param>
+        </member>
+        <member name="M:csmatio.types.MLSparse.IndexMN.GetHashCode">
+            <summary>
+            Serves as a hash function for an IndexMN.
+            </summary>
+            <returns>A hashcode for this object</returns>
+        </member>
+        <member name="M:csmatio.types.MLSparse.IndexMN.Equals(System.Object)">
+            <summary>
+            Overridden equals operator, see <see cref="M:System.Object.Equals(System.Object)"/>
+            </summary>
+            <param name="obj">A <c>System.Object</c> to be compared with.</param>
+            <returns>True if the object match.</returns>
+        </member>
+        <member name="M:csmatio.types.MLSparse.IndexMN.ToString">
+            <summary>
+            Get a string representation for this <c>IndexMN</c>.
+            </summary>
+            <returns>A <c>System.String</c></returns>
+        </member>
+        <member name="P:csmatio.types.MLSparse.IndexMN.M">
+            <summary>
+            Public accessor to the row index.
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLSparse.IndexMN.N">
+            <summary>
+            Public accessor to the column index.
             </summary>
         </member>
         <member name="T:csmatio.types.MLStructure">
@@ -2509,6 +2509,19 @@
             <param name="Type">The Matlab array type</param>
             <param name="Attributes">The array attributes</param>
         </member>
+        <member name="M:csmatio.types.MLStructure.GetKeySetToByteArray">
+            <summary>
+            Dumps field names to byte array.  Field names are written as Zero End Strings.
+            </summary>
+            <returns>A <c>byte</c> array for all the field names</returns>
+        </member>
+        <member name="M:csmatio.types.MLStructure.ContentToString">
+            <summary>
+            Get a string representation for the content of the array.
+            See <see cref="M:csmatio.types.MLArray.ContentToString"/>
+            </summary>
+            <returns>A string representation.</returns>
+        </member>
         <member name="P:csmatio.types.MLStructure.Item(System.String)">
             <summary>
             Public accessor to the field desribed by <c>Name</c> from the current structure.
@@ -2531,23 +2544,10 @@
             Gets the maximum length of field descriptor
             </summary>
         </member>
-        <member name="M:csmatio.types.MLStructure.GetKeySetToByteArray">
-            <summary>
-            Dumps field names to byte array.  Field names are written as Zero End Strings.
-            </summary>
-            <returns>A <c>byte</c> array for all the field names</returns>
-        </member>
         <member name="P:csmatio.types.MLStructure.AllFields">
             <summary>
             Gets all the fields from the struct array as a flat list of fields.
             </summary>
-        </member>
-        <member name="M:csmatio.types.MLStructure.ContentToString">
-            <summary>
-            Get a string representation for the content of the array.
-            See <see cref="M:csmatio.types.MLArray.ContentToString"/>
-            </summary>
-            <returns>A string representation.</returns>
         </member>
         <member name="T:csmatio.types.MLUInt16">
             <summary>
@@ -2629,11 +2629,6 @@
             <param name="dd"></param>
             <returns></returns>
         </member>
-        <member name="P:csmatio.types.MLUInt16.GetBytesAllocated">
-            <summary>
-            Gets the number of bytes allocated for a type
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLUInt16.BuildFromBytes(System.Byte[])">
             <summary>
             Builds a numeric object from a byte array.
@@ -2641,17 +2636,22 @@
             <param name="bytes">A byte array containing the data.</param>
             <returns>A numeric object</returns>
         </member>
-        <member name="P:csmatio.types.MLUInt16.GetStorageType">
-            <summary>
-            Gets the type of numeric object that this byte storage represents
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLUInt16.GetByteArray(System.Object)">
             <summary>
             Gets a <c>byte[]</c> for a particular long value.
             </summary>
             <param name="val">The short value</param>
             <returns>A byte array</returns>
+        </member>
+        <member name="P:csmatio.types.MLUInt16.GetBytesAllocated">
+            <summary>
+            Gets the number of bytes allocated for a type
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLUInt16.GetStorageType">
+            <summary>
+            Gets the type of numeric object that this byte storage represents
+            </summary>
         </member>
         <member name="T:csmatio.types.MLUInt32">
             <summary>
@@ -2740,11 +2740,6 @@
             <param name="dd"></param>
             <returns></returns>
         </member>
-        <member name="P:csmatio.types.MLUInt32.GetBytesAllocated">
-            <summary>
-            Gets the number of bytes allocated for a type
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLUInt32.BuildFromBytes(System.Byte[])">
             <summary>
             Builds a numeric object from a byte array.
@@ -2752,17 +2747,22 @@
             <param name="bytes">A byte array containing the data.</param>
             <returns>A numeric object</returns>
         </member>
-        <member name="P:csmatio.types.MLUInt32.GetStorageType">
-            <summary>
-            Gets the type of numeric object that this byte storage represents
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLUInt32.GetByteArray(System.Object)">
             <summary>
             Gets a <c>byte[]</c> for a particular long value.
             </summary>
             <param name="val">The long value</param>
             <returns>A byte array</returns>
+        </member>
+        <member name="P:csmatio.types.MLUInt32.GetBytesAllocated">
+            <summary>
+            Gets the number of bytes allocated for a type
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLUInt32.GetStorageType">
+            <summary>
+            Gets the type of numeric object that this byte storage represents
+            </summary>
         </member>
         <member name="T:csmatio.types.MLUInt64">
             <summary>
@@ -2856,11 +2856,6 @@
             <param name="dd"><c>long[]</c></param>
             <returns><c>double[]</c></returns>
         </member>
-        <member name="P:csmatio.types.MLUInt64.GetBytesAllocated">
-            <summary>
-            Gets the number of bytes allocated for a type
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLUInt64.BuildFromBytes(System.Byte[])">
             <summary>
             Builds a numeric object from a byte array.
@@ -2868,17 +2863,22 @@
             <param name="bytes">A byte array containing the data.</param>
             <returns>A numeric object</returns>
         </member>
-        <member name="P:csmatio.types.MLUInt64.GetStorageType">
-            <summary>
-            Gets the type of numeric object that this byte storage represents
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLUInt64.GetByteArray(System.Object)">
             <summary>
             Gets a <c>byte[]</c> for a particular long value.
             </summary>
             <param name="val">The long value</param>
             <returns>A byte array</returns>
+        </member>
+        <member name="P:csmatio.types.MLUInt64.GetBytesAllocated">
+            <summary>
+            Gets the number of bytes allocated for a type
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLUInt64.GetStorageType">
+            <summary>
+            Gets the type of numeric object that this byte storage represents
+            </summary>
         </member>
         <member name="T:csmatio.types.MLUInt8">
             <summary>
@@ -2966,22 +2966,12 @@
             </summary>
             <param name="val">The numeric object to convert into a byte array.</param>
         </member>
-        <member name="P:csmatio.types.MLUInt8.GetBytesAllocated">
-            <summary>
-            Gets the number of bytes allocated for a type
-            </summary>
-        </member>
         <member name="M:csmatio.types.MLUInt8.BuildFromBytes(System.Byte[])">
             <summary>
             Builds a numeric object from a byte array.
             </summary>
             <param name="bytes">A byte array containing the data.</param>
             <returns>A numeric object</returns>
-        </member>
-        <member name="P:csmatio.types.MLUInt8.GetStorageType">
-            <summary>
-            Gets the type of numeric object that this byte storage represents
-            </summary>
         </member>
         <member name="M:csmatio.types.MLUInt8._Get(csmatio.common.ByteBuffer,System.Int32)">
             <summary>
@@ -2990,6 +2980,16 @@
             <param name="buffer"></param>
             <param name="index"></param>
             <returns></returns>
+        </member>
+        <member name="P:csmatio.types.MLUInt8.GetBytesAllocated">
+            <summary>
+            Gets the number of bytes allocated for a type
+            </summary>
+        </member>
+        <member name="P:csmatio.types.MLUInt8.GetStorageType">
+            <summary>
+            Gets the type of numeric object that this byte storage represents
+            </summary>
         </member>
     </members>
 </doc>

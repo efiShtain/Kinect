@@ -13,7 +13,10 @@
     var nextStarPointDeltas = {X:0,Y:0};
     //Object for holding hits data
     var hits = {};
-    
+    var slicesGroup;
+    var slices = [];
+    var newSlices = null;
+    var newRects = null;
 
     function endStage() {
         var server = Server.GetInstance();
@@ -58,6 +61,7 @@
         server.Send({ Type: Server.Protocol.GET_NEXT_STAR_POSITION });
     }
 
+
     function killStar(player, star) {
         var hittingJoint = nearestJoint();
         nextStarId += 1;
@@ -82,6 +86,12 @@
         if (data.NextEnemyPoint != null) {
             nextStarPoint = data.NextEnemyPoint;
         }
+        if (data.Slices != null) {
+            newSlices = data.Slices;
+        }
+        if (data.Rects != null) {
+            newRects = data.Rects;
+        }
         isSet = true;
     };
 
@@ -89,8 +99,58 @@
 
         create: function () {
 
+            //for debuggin purposes we draw the slices and bounding rects
+            leftSlice = game.add.bitmapData(1600, 1000);
+            var color = 'white';
+            leftSlice.ctx.beginPath();
+            leftSlice.ctx.lineWidth = "4";
+            leftSlice.ctx.strokeStyle = color;
+            leftSlice.ctx.stroke();
+            game.add.sprite(0, 0, leftSlice);
+
+            middleSlice = game.add.bitmapData(1600, 1000);
+            var color = 'red';
+            middleSlice.ctx.beginPath();
+            middleSlice.ctx.lineWidth = "4";
+            middleSlice.ctx.strokeStyle = color;
+            middleSlice.ctx.stroke();
+            game.add.sprite(0, 0, middleSlice);
+
+            rightSlice = game.add.bitmapData(1600, 1000);
+            var color = 'blue';
+            rightSlice.ctx.beginPath();
+            rightSlice.ctx.lineWidth = "4";
+            rightSlice.ctx.strokeStyle = color;
+            rightSlice.ctx.stroke();
+            game.add.sprite(0, 0, rightSlice);
+
+            boundingRect = game.add.bitmapData(1600, 1000);
+            var color = 'green';
+            boundingRect.ctx.beginPath();
+            boundingRect.ctx.lineWidth = "4";
+            boundingRect.ctx.strokeStyle = color;
+            boundingRect.ctx.stroke();
+            game.add.sprite(0, 0, boundingRect);
+
+            innerRect = game.add.bitmapData(1600, 1000);
+            var color = 'yellow';
+            innerRect.ctx.beginPath();
+            innerRect.ctx.lineWidth = "4";
+            innerRect.ctx.strokeStyle = color;
+            innerRect.ctx.stroke();
+            game.add.sprite(0, 0, innerRect);
+
+            outterRect = game.add.bitmapData(1600, 1000);
+            var color = 'gray';
+            outterRect.ctx.beginPath();
+            outterRect.ctx.lineWidth = "4";
+            outterRect.ctx.strokeStyle = color;
+            outterRect.ctx.stroke();
+            game.add.sprite(0, 0, outterRect);
+
+
             //set background image
-            var background = game.add.sprite(0, 0, 'background');
+           // var background = game.add.sprite(0, 0, 'background');
 
             //add the astroids group
             starsGroup = game.add.group();
@@ -112,6 +172,21 @@
             }
 
 
+            //slicesGroup = game.add.group();
+            //slicesGroup.enableBody = true;
+            //for (var i = 0; i < 4; i++) {
+            //    slices[i] = slicesGroup.create(0, 0, 'a1');
+            //    slices[i].scale.setTo(2.0, 2.0);
+            //}
+
+            //for (var i = 4; i < 9; i++) {
+            //    slices[i] = slicesGroup.create(0, 0, 'a2');
+            //    slices[i].scale.setTo(2.0, 2.0);
+            //}
+            //for (var i = 9; i < 12; i++) {
+            //    slices[i] = slicesGroup.create(0, 0, 'a3');
+            //    slices[i].scale.setTo(2.0, 2.0);
+            //}
             text = game.add.text(10, 10, 'Good Luck!', { font: '30px Courier', fill: '#ffffff' });
 
             Server.GetInstance().RegisterForMessages(Server.Protocol.SKELETON_DATA, updateJoints);
@@ -135,17 +210,115 @@
                 isSet = false;
 
             }
+
             if (currentStar != undefined) {                                     //Update the position of a moving object only if it is in the game area
-                if (currentStar.body.position.x < game.world.width - 200 &&
-                    currentStar.body.position.y < game.world.height - 100 &&
-                    currentStar.body.position.x > 200 &&
-                    currentStar.body.position.y > 100){
+                //if (currentStar.body.position.x < game.world.width - 200 &&
+                //    currentStar.body.position.y < game.world.height - 100 &&
+                //    currentStar.body.position.x > 200 &&
+                //    currentStar.body.position.y > 100){
                     currentStar.body.position.x = nextStarPoint.X;
                     console.log(nextStarPoint.X);
                     currentStar.body.position.y = nextStarPoint.Y;
                     console.log(nextStarPoint.Y);
+               // }
+            }
+
+            if (GlobalConfiguration.DebugMode) {
+
+                if (newRects != null) {
+
+                    var s = newRects;
+
+                    boundingRect.clear();
+                    boundingRect.color = 'green';
+                    boundingRect.ctx.beginPath();
+                    boundingRect.ctx.beginPath();
+                    boundingRect.ctx.moveTo(s[0][0].X, s[0][0].Y);
+                    boundingRect.ctx.lineTo(s[0][1].X, s[0][1].Y);
+                    boundingRect.ctx.lineTo(s[0][2].X, s[0][2].Y);
+                    boundingRect.ctx.lineTo(s[0][3].X, s[0][3].Y);
+                    boundingRect.ctx.lineTo(s[0][0].X, s[0][0].Y);
+                    boundingRect.ctx.lineWidth = 4;
+                    boundingRect.ctx.stroke();
+
+                    boundingRect.render();
+
+                    innerRect.clear();
+                    innerRect.color = 'yellow';
+                    innerRect.ctx.beginPath();
+                    innerRect.ctx.beginPath();
+                    innerRect.ctx.moveTo(s[1][0].X, s[1][0].Y);
+                    innerRect.ctx.lineTo(s[1][1].X, s[1][1].Y);
+                    innerRect.ctx.lineTo(s[1][2].X, s[1][2].Y);
+                    innerRect.ctx.lineTo(s[1][3].X, s[1][3].Y);
+                    innerRect.ctx.lineTo(s[1][0].X, s[1][0].Y);
+                    innerRect.ctx.lineWidth = 4;
+                    innerRect.ctx.stroke();
+
+                    innerRect.render();
+
+                    outterRect.clear();
+                    outterRect.color = 'gray';
+                    outterRect.ctx.beginPath();
+                    outterRect.ctx.beginPath();
+                    outterRect.ctx.moveTo(s[2][0].X, s[2][0].Y);
+                    outterRect.ctx.lineTo(s[2][1].X, s[2][1].Y);
+                    outterRect.ctx.lineTo(s[2][2].X, s[2][2].Y);
+                    outterRect.ctx.lineTo(s[2][3].X, s[2][3].Y);
+                    outterRect.ctx.lineTo(s[2][0].X, s[2][0].Y);
+                    outterRect.ctx.lineWidth = 4;
+                    outterRect.ctx.stroke();
+
+                    outterRect.render();
+
+                    newRects = null;
+                }
+
+                if (newSlices != null) {
+                    var s = newSlices;
+
+                    leftSlice.clear();
+                    leftSlice.color = 'white';
+                    leftSlice.ctx.beginPath();
+                    leftSlice.ctx.beginPath();
+                    leftSlice.ctx.moveTo(s[0][0].X, s[0][0].Y);
+                    leftSlice.ctx.lineTo(s[0][1].X, s[0][1].Y);
+                    leftSlice.ctx.lineTo(s[0][2].X, s[0][2].Y);
+                    leftSlice.ctx.lineTo(s[0][3].X, s[0][3].Y);
+                    leftSlice.ctx.lineTo(s[0][0].X, s[0][0].Y);
+                    leftSlice.ctx.lineWidth = 4;
+                    leftSlice.ctx.stroke();
+
+
+                    middleSlice.clear();
+                    middleSlice.color = 'red';
+                    middleSlice.ctx.beginPath();
+                    middleSlice.ctx.beginPath();
+                    middleSlice.ctx.moveTo(s[1][0].X, s[1][0].Y);
+                    middleSlice.ctx.lineTo(s[1][1].X, s[1][1].Y);
+                    middleSlice.ctx.lineTo(s[1][2].X, s[1][2].Y);
+                    middleSlice.ctx.lineTo(s[1][3].X, s[1][3].Y);
+                    middleSlice.ctx.lineTo(s[1][0].X, s[1][0].Y);
+                    middleSlice.ctx.lineWidth = 4;
+                    middleSlice.ctx.stroke();
+
+
+                    rightSlice.clear();
+                    rightSlice.color = 'blue';
+                    rightSlice.ctx.beginPath();
+                    rightSlice.ctx.beginPath();
+                    rightSlice.ctx.moveTo(s[2][0].X, s[2][0].Y);
+                    rightSlice.ctx.lineTo(s[2][1].X, s[2][1].Y);
+                    rightSlice.ctx.lineTo(s[2][2].X, s[2][2].Y);
+                    rightSlice.ctx.lineTo(s[2][3].X, s[2][3].Y);
+                    rightSlice.ctx.lineTo(s[2][0].X, s[2][0].Y);
+                    rightSlice.ctx.lineWidth = 4;
+                    rightSlice.ctx.stroke();
+
+                    newSlices = null;
                 }
             }
+           
         }
     }
 })();

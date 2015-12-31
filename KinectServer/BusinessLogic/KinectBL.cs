@@ -40,8 +40,8 @@ namespace KinectServer.BusinessLogic
 
         private void SetKinect()
         {
-            ScaleFactorX = (float)(1600.0 / 512.0);
-            ScaleFactorY = (float)(1000.0 / 424.0);
+            ScaleFactorX = (float)(1600.0 / 1919.0);
+            ScaleFactorY = (float)(1000.0 / 1079.0);
             _sensor = KinectSensor.GetDefault();
             _mapper = _sensor.CoordinateMapper;
 
@@ -53,14 +53,21 @@ namespace KinectServer.BusinessLogic
         }
 
 
-        private DepthSpacePoint ConverEnemyLocationToDepthSpace(Point3D enemyLocation)
+        private ColorSpacePoint ConverEnemyLocationToDepthSpace(Point3D enemyLocation)
         {
             CameraSpacePoint enemy = new CameraSpacePoint();
             enemy.X = (float)enemyLocation.X;
             enemy.Y = (float)enemyLocation.Y;
-            enemy.Z = (float)enemyLocation.Z;
-
-            return _mapper.MapCameraPointToDepthSpace(enemy);
+            if (enemyLocation.Z < 0)
+            {
+                enemy.Z = 0.1f;
+            }
+            else
+            {
+                enemy.Z = (float)enemyLocation.Z;
+            }
+            return _mapper.MapCameraPointToColorSpace(enemy);
+            //return _mapper.MapCameraPointToDepthSpace(enemy);
 
         }
 
@@ -101,16 +108,22 @@ namespace KinectServer.BusinessLogic
                             }
                             kinectPoints.Add(new Point3D(position.X, position.Y, position.Z));
 
-                            DepthSpacePoint depthPoint = _mapper.MapCameraPointToDepthSpace(position);
+                            var screenSpacePoint = _mapper.MapCameraPointToColorSpace(position);
                             ScreenPoint p = new ScreenPoint()
                             {
-                                X = (int)(depthPoint.X * ScaleFactorX),
-                                Y = (int)(depthPoint.Y * ScaleFactorY),
+                                X = (int)(screenSpacePoint.X * ScaleFactorX),
+                                Y = (int)(screenSpacePoint.Y * ScaleFactorY)
                             };
+                            //DepthSpacePoint depthPoint = _mapper.MapCameraPointToDepthSpace(position);
+                            //ScreenPoint p = new ScreenPoint()
+                            //{
+                            //    X = (int)(depthPoint.X * ScaleFactorX),
+                            //    Y = (int)(depthPoint.Y * ScaleFactorY),
+                            //};
 
                             screenPoints.Add(p);
                         }
-
+                        Slice currentSlice = null;
                         if (NewJointsDataReady != null)
                         {
                             var displayData = new DisplayData();
@@ -128,46 +141,124 @@ namespace KinectServer.BusinessLogic
                                   * BottomY= Min(Left Foot, Right Foot)
                                   * 
                                  */
-                                
+
                                 var leftHand = body.Joints[JointType.HandLeft].Position;
                                 var rightHand = body.Joints[JointType.HandRight].Position;
                                 var head = body.Joints[JointType.Head].Position;
                                 var leftFoot = body.Joints[JointType.FootLeft].Position;
                                 var rightFoot = body.Joints[JointType.FootRight].Position;
                                 zPlane = body.Joints[JointType.SpineBase].Position.Z;
+                                if (zPlane < 0)
+                                {
+                                    zPlane = 0.1f;
+                                }
 
                                 var topY = head.Y;
                                 var bottomY = Math.Min(leftFoot.Y, rightFoot.Y);
                                 var minX = Math.Min(leftHand.X, rightHand.X);
                                 var maxX = Math.Max(leftHand.X, rightHand.X);
 
-                                BoundingRect bodyRect = new BoundingRect(minX, bottomY, zPlane, maxX - minX, topY - bottomY, 1.0f);
+                                BoundingRect bodyRect = new BoundingRect(minX, topY, zPlane, maxX - minX, topY - bottomY, 1.0f);
                                 var innerRect = bodyRect.Inflate(_innerRectInflationRatioX, _innerRectInflationRatioY, 1.0f);
                                 var outterRect = bodyRect.Inflate(_outterRectInflationRatioX, _outterRectInflationRatioY, 1.0f);
+
+                                displayData.Rects = new Dictionary<int, List<ScreenPoint>>();
+                                displayData.Rects.Add(0, new List<ScreenPoint>());
+                                var r = displayData.Rects[0];
+                                foreach (var p in bodyRect.GetCorners())
+                                {
+                                    var csp = ConverEnemyLocationToDepthSpace(p);
+                                    var sp = new ScreenPoint();
+
+                                    sp.X = (int)(csp.X * ScaleFactorX);
+                                    sp.Y = (int)(csp.Y * ScaleFactorY);
+
+                                    r.Add(sp);
+                                }
+
+                                displayData.Rects.Add(1, new List<ScreenPoint>());
+                                var r2 = displayData.Rects[1];
+                                foreach (var p in innerRect.GetCorners())
+                                {
+                                    var csp = ConverEnemyLocationToDepthSpace(p);
+                                    var sp = new ScreenPoint();
+
+                                    sp.X = (int)(csp.X * ScaleFactorX);
+                                    sp.Y = (int)(csp.Y * ScaleFactorY);
+
+                                    r2.Add(sp);
+                                }
+
+                                displayData.Rects.Add(2, new List<ScreenPoint>());
+                                var r3 = displayData.Rects[2];
+                                foreach (var p in outterRect.GetCorners())
+                                {
+                                    var csp = ConverEnemyLocationToDepthSpace(p);
+                                    var sp = new ScreenPoint();
+
+                                    sp.X = (int)(csp.X * ScaleFactorX);
+                                    sp.Y = (int)(csp.Y * ScaleFactorY);
+
+                                    r3.Add(sp);
+                                }
+                                
+                                
                                 var slices = Slicer.SliceRect(innerRect, outterRect, 3);
 
+                                displayData.Slices = new Dictionary<int, List<ScreenPoint>>();
+                                var SlicesCorners = new Dictionary<int, List<Point3D>>();
+                                SlicesCorners.Add(0, slices[0].GetCorners());
+                                SlicesCorners.Add(1, slices[1].GetCorners());
+                                SlicesCorners.Add(2, slices[2].GetCorners());
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    displayData.Slices.Add(i, new List<ScreenPoint>());
+                                    foreach (var p in SlicesCorners[i])
+                                    {
+                                        var csp = ConverEnemyLocationToDepthSpace(p);
+                                        var sp = new ScreenPoint();
+
+                                        sp.X = (int)(csp.X * ScaleFactorX);
+                                        sp.Y = (int)(csp.Y * ScaleFactorY);
+                                        
+                                        displayData.Slices[i].Add(sp);
+                                    }
+                                }
+                                
+                                
+                                
+                                
+
+
+
                                 var nextDefinedPoint = _predefinedEnemiesList[_enemyCounter];
-                                var slicePoint = slices[nextDefinedPoint.SliceId].ConvertPoint(nextDefinedPoint.X, nextDefinedPoint.Y, nextDefinedPoint.Z);
+                                currentSlice = slices[nextDefinedPoint.SliceId];
+                                var slicePoint = currentSlice.ConvertPoint(nextDefinedPoint.X, nextDefinedPoint.Y, nextDefinedPoint.Z);
                                 _currentEnemyObject = new Moveable(
-                                    (float)slicePoint.X, (float)slicePoint.Y, (float)slicePoint.Z,
+                                    (float)slicePoint.X, (float)slicePoint.Y, zPlane,
                                     nextDefinedPoint.V0X, nextDefinedPoint.V0Y, nextDefinedPoint.V0Z,
                                     nextDefinedPoint.AX, nextDefinedPoint.AY, nextDefinedPoint.AZ);
-
+                                //_currentEnemyObject.SetBoundaries(-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f);
                                 _currentEnemyObject.Init(); //Start time of object for trajectory calculations, t0
                                 IsGetNextPoint = false;
                                 _enemyCounter++;
                             }
-                           
 
-                            var mappedEnemy = ConverEnemyLocationToDepthSpace(_currentEnemyObject.GetNextPosition());
-                            displayData.NextEnemyPoint = new ScreenPoint();
-                            displayData.NextEnemyPoint.X = (int)(mappedEnemy.X * ScaleFactorX);
-                            displayData.NextEnemyPoint.Y = (int)(mappedEnemy.Y * ScaleFactorY);
-                            
+                            if (_currentEnemyObject != null)
+                            {
+                                var nextEnemyPosition = _currentEnemyObject.GetNextPosition();
+                                var mappedEnemy = ConverEnemyLocationToDepthSpace(nextEnemyPosition);
+                                displayData.NextEnemyPoint = new ScreenPoint();
+                                displayData.NextEnemyPoint.X = (int)(mappedEnemy.X * ScaleFactorX);
+                                displayData.NextEnemyPoint.Y = (int)(mappedEnemy.Y * ScaleFactorY);
+                                displayData.NextEnemyPoint.Z = (int)zPlane;
+                                //displayData.NextEnemyPoint.X = (int)(mappedEnemy.X);
+                                //displayData.NextEnemyPoint.Y = (int)(mappedEnemy.Y);
+                            }
                             displayData.Joints = screenPoints;
                             displayData.SkeletonIndex = _skeletonIndex++;
 
-                            NewJointsDataReady(displayData, kinectPoints, _currentEnemyObject.GetLastPosition());
+                            NewJointsDataReady(displayData, kinectPoints, _currentEnemyObject!=null?_currentEnemyObject.GetLastPosition():new Point3D(0,0,0));
                         }
 
                     }
@@ -233,8 +324,8 @@ namespace KinectServer.BusinessLogic
         {
             _innerRectInflationRatioX = inner["RatioX"];
             _innerRectInflationRatioY = inner["RatioY"];
-            _outterRectInflationRatioX = inner["RatioX"];
-            _outterRectInflationRatioY = inner["RatioY"];
+            _outterRectInflationRatioX = outter["RatioX"];
+            _outterRectInflationRatioY = outter["RatioY"];
         }
     }
 }

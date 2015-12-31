@@ -53,7 +53,7 @@ namespace PhysicsSimulator
             gif.Players["igor"]["InnerBoundaryCheck"].Add(new UserDefinedPoint() { X = 0.1f, AX = 0.8f, Z = 0.4f });
             gif.Players["igor"]["InnerBoundaryCheck"].Add(new UserDefinedPoint() { SliceId = 2, X = 0.87f, AX = 0.2f, Y = 0.4f });
             var res = JsonConvert.SerializeObject(gif);
-            File.WriteAllText(@"c:\Test\1.json", res);
+            File.WriteAllText(@"c:\Tests\1.json", res);
         }
 
         private void _t_Tick(object sender, EventArgs e)

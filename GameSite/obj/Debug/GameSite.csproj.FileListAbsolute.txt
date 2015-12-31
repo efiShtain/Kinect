@@ -10,3 +10,9 @@ C:\Users\everysight\Documents\Kinect\GameSite\bin\Debug\GameSite.pdb
 C:\Users\everysight\Documents\Kinect\GameSite\obj\Debug\GameSite.csprojResolveAssemblyReference.cache
 C:\Users\everysight\Documents\Kinect\GameSite\obj\Debug\GameSite.exe
 C:\Users\everysight\Documents\Kinect\GameSite\obj\Debug\GameSite.pdb
+C:\Users\efi\Documents\KinectGit\Kinect\GameSite\bin\Debug\GameSite.exe.config
+C:\Users\efi\Documents\KinectGit\Kinect\GameSite\bin\Debug\GameSite.exe
+C:\Users\efi\Documents\KinectGit\Kinect\GameSite\bin\Debug\GameSite.pdb
+C:\Users\efi\Documents\KinectGit\Kinect\GameSite\obj\Debug\GameSite.exe
+C:\Users\efi\Documents\KinectGit\Kinect\GameSite\obj\Debug\GameSite.pdb
+C:\Users\efi\Documents\KinectGit\Kinect\GameSite\obj\Debug\GameSite.csprojResolveAssemblyReference.cache

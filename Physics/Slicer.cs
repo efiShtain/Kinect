@@ -16,9 +16,21 @@ namespace Physics
             var verticalMargin = outter.Height - inner.Height;
             var depthMargin = outter.Z - inner.Z;
 
+            
+            /*
+             * Top Left coordinate system
+             */
             var leftSlice = new Slice(outter.X, outter.Y, outter.Z, horizontalMargin, outter.Height, depthMargin);
-            var upperSlice = new Slice(outter.X, inner.Height, outter.Z, outter.Width, verticalMargin, depthMargin);
+            var upperSlice = new Slice(outter.X, outter.Y, outter.Z, outter.Width, verticalMargin, depthMargin);
             var rightSlice = new Slice(inner.X + inner.Width, outter.Y, outter.Z, horizontalMargin, outter.Height, depthMargin);
+
+
+            /*
+             * Bottom Left coordinate system
+             */
+            //var leftSlice = new Slice(outter.X, outter.Y, outter.Z, horizontalMargin, outter.Height, depthMargin);
+            //var upperSlice = new Slice(outter.X, inner.Height, outter.Z, outter.Width, verticalMargin, depthMargin);
+            //var rightSlice = new Slice(inner.X + inner.Width, outter.Y, outter.Z, horizontalMargin, outter.Height, depthMargin);
             sliceList.Add(leftSlice);
             sliceList.Add(upperSlice);
             sliceList.Add(rightSlice);

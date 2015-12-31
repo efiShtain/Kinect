@@ -36,12 +36,12 @@ namespace KinectServer.BusinessLogic
 
         public Dictionary<string,float> GetInnerBoundaryInflationRatios()
         {
-            return _gameInputDetails.InnerBoundryInflRatio;
+            return _gameInputDetails.InnerBoundaryInflRatio;
         }
 
         public Dictionary<string, float> GetOuterBoundaryInflationRatios()
         {
-            return _gameInputDetails.OuterBoundryInflRatio;
+            return _gameInputDetails.OuterBoundaryInflRatio;
         }
 
         
@@ -70,6 +70,7 @@ namespace KinectServer.BusinessLogic
                     inst.State = s;
                     inst.Text = s;
                     inst.EnemyCount = firstPlayerStages[s].Count;
+                    stages.Add(inst);
                 }               
             }
             return stages;

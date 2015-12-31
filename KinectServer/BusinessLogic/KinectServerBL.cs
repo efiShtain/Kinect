@@ -60,9 +60,6 @@ namespace KinectServer.BusinessLogic
             _recordedHitsData = new Dictionary<string, List<Hit>>();
             _trajectoriesData = new Dictionary<string, List<Point3D>>();
             _pointsParser = new CustomPointsListParser();
-            _pointsParser.Init();
-            _game = new GameLogic(_pointsParser.GetStages());
-
             _server.StartServer();
         }
 
@@ -93,6 +90,8 @@ namespace KinectServer.BusinessLogic
                 }
 
                 GenerateMatlabFiles();
+                _recordedHitsData.Clear();
+                _trajectoriesData.Clear();
             }
             if (SessionClosed != null)
             {
@@ -126,10 +125,14 @@ namespace KinectServer.BusinessLogic
                     break;
                 case Protocol.GET_NEXT_INSTRUCTIONS:
                     var instruction = _game.NextInstruction;
-                    _trajectoriesData.Add(instruction.State, new List<Point3D>());
-                    var enemiesList = _pointsParser.GetPointsForStage(_currentPlayer, instruction.State);
-                    _kinect.SetEnemiesList(enemiesList);
-                    instruction.EnemyCount = enemiesList.Count;
+                    if (instruction.State != "win")
+                    {
+                        _trajectoriesData.Add(instruction.State, new List<Point3D>());
+                        _recordedHitsData.Add(instruction.State, new List<Hit>());
+                        var enemiesList = _pointsParser.GetPointsForStage(_currentPlayer, instruction.State);
+                        _kinect.SetEnemiesList(enemiesList);
+                        instruction.EnemyCount = enemiesList.Count;
+                    }
                     _server.PostMessage<Instruction>(instruction, Protocol.GET_NEXT_INSTRUCTIONS);
                     if (GameStateChanged != null)
                     {
@@ -165,6 +168,10 @@ namespace KinectServer.BusinessLogic
 
         private void _server_NewSessionStarted()
         {
+            
+            _pointsParser.Init();
+            _game = new GameLogic(_pointsParser.GetStages());
+            _kinect.SetInflationRatios(_pointsParser.GetInnerBoundaryInflationRatios(), _pointsParser.GetOuterBoundaryInflationRatios());
             _game.ResetInstructionsCounter();
             if (SessionStarted != null)
             {
@@ -179,6 +186,7 @@ namespace KinectServer.BusinessLogic
             {
                 _recordedHitsData[_game.CurrentState].Add(new Hit() { T1 = screenData.SkeletonIndex });
                 _server.PostMessage<ScreenPoint>(screenData.NextEnemyPoint, Communication.Protocol.GET_NEXT_STAR_POSITION);
+                
                 _waitingForPoint = false;
             }
 

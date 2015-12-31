@@ -24,7 +24,11 @@ namespace Physics
         {
             var p = new Point3D();
             p.X = _x + x * _width;
+            //for top-left coordinate system
             p.Y = _y + y * _height;
+            
+            //for bottom-left coordinate system
+            //p.Y = _y - y * _height;
             p.Z = _z + z * _depth;
             return p;
         }
@@ -35,6 +39,16 @@ namespace Physics
         public float Height { get { return _height; } }
         public float Width { get { return _width; } }
         public float Depth { get { return _depth; } }
+
+        public List<Point3D> GetCorners()
+        {
+            var points = new List<Point3D>();
+            points.Add(new Point3D(_x , _y ,_z));
+            points.Add(new Point3D((_x+_width),_y,_z));
+            points.Add(new Point3D((_x + _width) , (_y-_height) , _z));
+            points.Add(new Point3D(_x, (_y - _height) , _z));
+            return points;
+        }
 
         public override string ToString()
         {

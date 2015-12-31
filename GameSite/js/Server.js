@@ -87,7 +87,7 @@
         HITS_DATA: 201,
 
         GAME_DONE: 301,
-        PLAYER_NAME:400
+        PLAYER_NAME: 400
     }
 
     //public

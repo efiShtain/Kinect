@@ -25,7 +25,7 @@ namespace Physics
             var p = new Point3D();
             p.X = _x + x * _width;
             //for top-left coordinate system
-            p.Y = _y + y * _height;
+            p.Y = _y - y * _height;
             
             //for bottom-left coordinate system
             //p.Y = _y - y * _height;

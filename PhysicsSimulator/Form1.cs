@@ -26,34 +26,34 @@ namespace PhysicsSimulator
         public Form1()
         {
             InitializeComponent();
-            _p = new Moveable(0, 0, 0, 1, 2, 0.3f, 0,3f, 0);
-            _p.Init();
+            //_p = new Moveable(0, 0, 0, 1, 2, 0.3f, 0,3f, 0);
+            //_p.Init();
             _t = new Timer();
-            //_t.Tick += _t_Tick;
-            _t.Interval = 20;
+            ////_t.Tick += _t_Tick;
+            //_t.Interval = 20;
             _body = new BoundingRect(0, 0, 0, 50, 50, 50);
             _inner = _body.Inflate(0.1f, 0.1f, 0.1f);
             _outter = _body.Inflate(0.2f,0.2f,0.2f);
             _slices = Slicer.SliceRect(_inner, _outter, 3);
             //CustomPointsListParser p = new CustomPointsListParser();
-            GameInputFile gif = new GameInputFile();
-            gif.InnerBoundaryInflRatio = new Dictionary<string, float>();
-            gif.InnerBoundaryInflRatio.Add("RatioX", 0.2f);
-            gif.InnerBoundaryInflRatio.Add("RatioY", 0.2f);
-            gif.OuterBoundaryInflRatio = new Dictionary<string, float>();
-            gif.OuterBoundaryInflRatio.Add("RatioX", 0.2f);
-            gif.OuterBoundaryInflRatio.Add("RatioY", 0.2f);
-            gif.Players = new Dictionary<string, Dictionary<string, List<UserDefinedPoint>>>();
-            gif.Players.Add("efi", new Dictionary<string, List<UserDefinedPoint>>());
-            gif.Players["efi"].Add("InnerBoundaryCheck", new List<UserDefinedPoint>());
-            gif.Players["efi"]["InnerBoundaryCheck"].Add(new UserDefinedPoint() { X = 0.1f, AX = 0.8f, Z=0.4f });
-            gif.Players["efi"]["InnerBoundaryCheck"].Add(new UserDefinedPoint() {SliceId=2, X = 0.87f, AX = 0.2f, Y = 0.4f });
-            gif.Players.Add("igor", new Dictionary<string, List<UserDefinedPoint>>());
-            gif.Players["igor"].Add("InnerBoundaryCheck", new List<UserDefinedPoint>());
-            gif.Players["igor"]["InnerBoundaryCheck"].Add(new UserDefinedPoint() { X = 0.1f, AX = 0.8f, Z = 0.4f });
-            gif.Players["igor"]["InnerBoundaryCheck"].Add(new UserDefinedPoint() { SliceId = 2, X = 0.87f, AX = 0.2f, Y = 0.4f });
-            var res = JsonConvert.SerializeObject(gif);
-            File.WriteAllText(@"c:\Tests\1.json", res);
+            //GameInputFile gif = new GameInputFile();
+            //gif.InnerBoundaryInflRatio = new Dictionary<string, float>();
+            //gif.InnerBoundaryInflRatio.Add("RatioX", 0.2f);
+            //gif.InnerBoundaryInflRatio.Add("RatioY", 0.2f);
+            //gif.OuterBoundaryInflRatio = new Dictionary<string, float>();
+            //gif.OuterBoundaryInflRatio.Add("RatioX", 0.2f);
+            //gif.OuterBoundaryInflRatio.Add("RatioY", 0.2f);
+            //gif.Players = new Dictionary<string, Dictionary<string, List<UserDefinedPoint>>>();
+            //gif.Players.Add("efi", new Dictionary<string, List<UserDefinedPoint>>());
+            //gif.Players["efi"].Add("InnerBoundaryCheck", new List<UserDefinedPoint>());
+            //gif.Players["efi"]["InnerBoundaryCheck"].Add(new UserDefinedPoint() { X = 0.1f, AX = 0.8f, Z=0.4f });
+            //gif.Players["efi"]["InnerBoundaryCheck"].Add(new UserDefinedPoint() {SliceId=2, X = 0.87f, AX = 0.2f, Y = 0.4f });
+            //gif.Players.Add("igor", new Dictionary<string, List<UserDefinedPoint>>());
+            //gif.Players["igor"].Add("InnerBoundaryCheck", new List<UserDefinedPoint>());
+            //gif.Players["igor"]["InnerBoundaryCheck"].Add(new UserDefinedPoint() { X = 0.1f, AX = 0.8f, Z = 0.4f });
+            //gif.Players["igor"]["InnerBoundaryCheck"].Add(new UserDefinedPoint() { SliceId = 2, X = 0.87f, AX = 0.2f, Y = 0.4f });
+            //var res = JsonConvert.SerializeObject(gif);
+            //File.WriteAllText(@"c:\Tests\1.json", res);
         }
 
         private void _t_Tick(object sender, EventArgs e)
@@ -92,8 +92,8 @@ namespace PhysicsSimulator
         {
             chart1.Series[index].Points.AddXY(s.X, s.Y);
             chart1.Series[index].Points.AddXY(s.X + s.Width, s.Y);
-            chart1.Series[index].Points.AddXY(s.X + s.Width, s.Y + s.Height);
-            chart1.Series[index++].Points.AddXY(s.X, s.Y + s.Height);
+            chart1.Series[index].Points.AddXY(s.X + s.Width, s.Y - s.Height);
+            chart1.Series[index++].Points.AddXY(s.X, s.Y - s.Height);
         }
         int moveableCounter = 0;
         void addRandomPoints(Slice s)
@@ -114,15 +114,15 @@ namespace PhysicsSimulator
             addSlice(_slices[2]);
             chart1.Series["b"].Points.AddXY(_body.X, _body.Y);
             chart1.Series["b"].Points.AddXY(_body.X + _body.Width, _body.Y);
-            chart1.Series["b"].Points.AddXY(_body.X + _body.Width, _body.Y + _body.Height);
-            chart1.Series["b"].Points.AddXY(_body.X, _body.Y + _body.Height);
+            chart1.Series["b"].Points.AddXY(_body.X + _body.Width, _body.Y - _body.Height);
+            chart1.Series["b"].Points.AddXY(_body.X, _body.Y - _body.Height);
 
 
             //addRandomPoints(_slices[0]);
             //addRandomPoints(_slices[1]);
             //addRandomPoints(_slices[2]);
-            var ppp = _slices[1].ConvertPoint(0.2f, 0.3f, 0.1f); //get point in slice coordinates
-            a = new Moveable((float)ppp.X, (float)ppp.Y, (float)ppp.Z, 10.0f, 0.0f, .0f, 0.0f, -9.8f, 0.1f); //create moveable object
+            var ppp = _slices[0].ConvertPoint(0.0f, 0.0f, 0.0f); //get point in slice coordinates
+            a = new Moveable((float)ppp.X, (float)ppp.Y, (float)ppp.Z, 100.0f, 0.0f, .0f, 0.0f, -100.0f, 0.0f); //create moveable object
             a.Init(); //start time
             _t.Tick += moveableTick;
             _t.Start();
@@ -132,6 +132,7 @@ namespace PhysicsSimulator
         {
             var nextP = a.GetNextPosition();
             chart1.Series["p"].Points.AddXY(nextP.X, nextP.Y);
+            textBox2.AppendText(nextP.ToString() + Environment.NewLine);
         }
 
         private void button2_Click(object sender, EventArgs e)

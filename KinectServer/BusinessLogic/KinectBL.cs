@@ -161,6 +161,7 @@ namespace KinectServer.BusinessLogic
                                 BoundingRect bodyRect = new BoundingRect(minX, topY, zPlane, maxX - minX, topY - bottomY, 1.0f);
                                 var innerRect = bodyRect.Inflate(_innerRectInflationRatioX, _innerRectInflationRatioY, 1.0f);
                                 var outterRect = bodyRect.Inflate(_outterRectInflationRatioX, _outterRectInflationRatioY, 1.0f);
+                                var boundariesRect = outterRect.Inflate(_outterRectInflationRatioX, _outterRectInflationRatioY,1.0f);
 
                                 displayData.Rects = new Dictionary<int, List<ScreenPoint>>();
                                 displayData.Rects.Add(0, new List<ScreenPoint>());
@@ -225,20 +226,16 @@ namespace KinectServer.BusinessLogic
                                     }
                                 }
                                 
-                                
-                                
-                                
-
-
-
                                 var nextDefinedPoint = _predefinedEnemiesList[_enemyCounter];
                                 currentSlice = slices[nextDefinedPoint.SliceId];
                                 var slicePoint = currentSlice.ConvertPoint(nextDefinedPoint.X, nextDefinedPoint.Y, nextDefinedPoint.Z);
                                 _currentEnemyObject = new Moveable(
-                                    (float)slicePoint.X, (float)slicePoint.Y, zPlane,
+                                    (float)slicePoint.X, (float)slicePoint.Y, (float)slicePoint.Z,
                                     nextDefinedPoint.V0X, nextDefinedPoint.V0Y, nextDefinedPoint.V0Z,
                                     nextDefinedPoint.AX, nextDefinedPoint.AY, nextDefinedPoint.AZ);
-                                //_currentEnemyObject.SetBoundaries(-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f);
+                                //_currentEnemyObject.SetBoundaries(-1.5f, -1.5f, -5.0f, 1.5f, 1.5f, 5.0f);
+                                //var boundaries = boundariesRect.GetCorners();
+                                //_currentEnemyObject.SetBoundaries((float)boundaries[0].X, (float)boundaries[0].Y, -5.0f, (float)boundaries[3].X, (float)boundaries[3].Y, 5.0f);
                                 _currentEnemyObject.Init(); //Start time of object for trajectory calculations, t0
                                 IsGetNextPoint = false;
                                 _enemyCounter++;
@@ -252,8 +249,6 @@ namespace KinectServer.BusinessLogic
                                 displayData.NextEnemyPoint.X = (int)(mappedEnemy.X * ScaleFactorX);
                                 displayData.NextEnemyPoint.Y = (int)(mappedEnemy.Y * ScaleFactorY);
                                 displayData.NextEnemyPoint.Z = (int)zPlane;
-                                //displayData.NextEnemyPoint.X = (int)(mappedEnemy.X);
-                                //displayData.NextEnemyPoint.Y = (int)(mappedEnemy.Y);
                             }
                             displayData.Joints = screenPoints;
                             displayData.SkeletonIndex = _skeletonIndex++;

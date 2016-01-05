@@ -10,8 +10,7 @@
     var body = [];
     var text;
     var nextStarPoint;
-    var nextStarPointDeltas = {X:0,Y:0};
-    //Object for holding hits data
+    var nextStarPointDeltas = { X: 0, Y: 0 };
     var hits = {};
     var slicesGroup;
     var slices = [];
@@ -33,7 +32,8 @@
         }
         console.log("Creating star");
         currentStar = starsGroup.create(nextStarPoint.X, nextStarPoint.Y, 'a' + Math.floor(Math.random() * 10 % 3 + 1));
-        currentStar.scale.setTo(2.0, 2.0);
+        currentStar.anchor.setTo(0.5, 0.5);
+        currentStar.scale.setTo(1.0, 1.0);
         console.log("nextStarId: " + nextStarId);
 
 
@@ -95,9 +95,30 @@
         isSet = true;
     };
 
+    function initStage() {
+        isSet = false;
+        joints = 'undefined';
+        nextStarId = 0;
+        nextStarTimer;
+        currentSkeletonIndex = 1;
+        starsGroup = '';
+        skeletonGroup = '';
+        currentStar;
+        body = [];
+        text;
+        nextStarPoint;
+        nextStarPointDeltas = { X: 0, Y: 0 };
+        hits = {};
+        slicesGroup;
+        slices = [];
+        newSlices = null;
+        newRects = null;
+    }
+
     return {
 
         create: function () {
+            initStage();
 
             //for debuggin purposes we draw the slices and bounding rects
             leftSlice = game.add.bitmapData(1600, 1000);
@@ -150,7 +171,7 @@
 
 
             //set background image
-           // var background = game.add.sprite(0, 0, 'background');
+            // var background = game.add.sprite(0, 0, 'background');
 
             //add the astroids group
             starsGroup = game.add.group();
@@ -211,16 +232,11 @@
 
             }
 
-            if (currentStar != undefined) {                                     //Update the position of a moving object only if it is in the game area
-                //if (currentStar.body.position.x < game.world.width - 200 &&
-                //    currentStar.body.position.y < game.world.height - 100 &&
-                //    currentStar.body.position.x > 200 &&
-                //    currentStar.body.position.y > 100){
-                    currentStar.body.position.x = nextStarPoint.X;
-                    console.log(nextStarPoint.X);
-                    currentStar.body.position.y = nextStarPoint.Y;
-                    console.log(nextStarPoint.Y);
-               // }
+            if (currentStar != undefined && currentStar.body) {                                     //Update the position of a moving object only if it is in the game area
+                currentStar.body.position.x = nextStarPoint.X;
+                console.log(nextStarPoint.X);
+                currentStar.body.position.y = nextStarPoint.Y;
+                console.log(nextStarPoint.Y);
             }
 
             if (GlobalConfiguration.DebugMode) {
@@ -318,7 +334,7 @@
                     newSlices = null;
                 }
             }
-           
+
         }
     }
 })();

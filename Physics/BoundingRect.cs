@@ -27,7 +27,8 @@ namespace Physics
             var rect = new BoundingRect(
                 _x - _width * xInfltionRatio,
                 _y + heightAddition,
-                _z - _depth * zInflationRatio,
+                //_z - _depth * zInflationRatio,
+                _z,
                 _width + widthAddition,
                 _height + heightAddition,
                 //_depth * (1 + 2 * zInflationRatio)

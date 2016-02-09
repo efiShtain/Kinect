@@ -6,7 +6,8 @@
     GameWidth: 1600,
     GameHeight: 1000,
     TryReconnectToServerInterval: 1000,
-    InstructionTimer: 3,
+    InstructionTimer: 7,
     States: ['InnerBoundaryCheck', 'OuterBoundaryCheck'],
-    DebugMode:true
+    DebugMode: true,
+    RadiusFactor:2
 };

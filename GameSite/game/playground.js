@@ -8,6 +8,7 @@
     var skeletonGroup = '';
     var currentStar;
     var body = [];
+    var oldBody = [];
     var text;
     var nextStarPoint;
     var nextStarPointDeltas = { X: 0, Y: 0 };
@@ -16,6 +17,7 @@
     var slices = [];
     var newSlices = null;
     var newRects = null;
+    var radius = 1.0;
 
     function endStage() {
         var server = Server.GetInstance();
@@ -33,11 +35,12 @@
         console.log("Creating star");
         currentStar = starsGroup.create(nextStarPoint.X, nextStarPoint.Y, 'a' + Math.floor(Math.random() * 10 % 3 + 1));
         currentStar.anchor.setTo(0.5, 0.5);
-        currentStar.scale.setTo(1.0, 1.0);
+        currentStar.scale.setTo(radius / (currentStar.body.width / 2), radius / (currentStar.body.height / 2) );
         console.log("nextStarId: " + nextStarId);
 
 
     };
+
 
     function nearestJoint() {
         var closest = 1000;
@@ -91,6 +94,11 @@
         }
         if (data.Rects != null) {
             newRects = data.Rects;
+        }
+        if (data.RadiusPoint != null) {
+            var rp = data.RadiusPoint;
+            var dist = Math.sqrt(Math.pow(rp.X - data.NextEnemyPoint.X, 2) + Math.pow(rp.Y - data.NextEnemyPoint.Y, 2));
+            radius = dist;
         }
         isSet = true;
     };
@@ -192,6 +200,10 @@
                 body[i] = skeletonGroup.create(0, 0, 'dot');
             }
 
+            //var oldBodyGroup = game.add.group();
+            //for (var i = 0; i < 25; i++) {
+            //    oldBodyGroup[i] = skeletonGroup.create(0, 0, 'dot');
+            //}
 
             //slicesGroup = game.add.group();
             //slicesGroup.enableBody = true;
@@ -234,9 +246,9 @@
 
             if (currentStar != undefined && currentStar.body) {                                     //Update the position of a moving object only if it is in the game area
                 currentStar.body.position.x = nextStarPoint.X;
-                console.log(nextStarPoint.X);
                 currentStar.body.position.y = nextStarPoint.Y;
-                console.log(nextStarPoint.Y);
+                //currentStar.scale.setTo(radius/(currentStar.body.width/2) , radius/(currentStar.body.height/2));
+                console.log("Width scaling: "+radius/(currentStar.body.width/2));
             }
 
             if (GlobalConfiguration.DebugMode) {

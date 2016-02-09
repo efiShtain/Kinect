@@ -15,6 +15,7 @@ namespace KinectServer.BusinessLogic
     public static class MatlabDriver
     {
         private const int _jointsTimesCoordinate = 25*3;
+        private const int _jointsTimesCoordinate2d = 25 * 2;
         private static string _folder;
 
         public static void SetFolder()
@@ -186,7 +187,7 @@ namespace KinectServer.BusinessLogic
         }
 
 
-        public static void ToMatAll(List<List<Point3D>> skeleton, List<Hit> hits, List<Point3D> trajectories, string name = "")
+        public static void ToMatAll(List<List<Point3D>> skeleton, List<Hit> hits, List<Point3D> trajectories, List<List<ScreenPoint>> skeleton2d, List<ScreenPoint> trajectories2d, string name = "")
         {
             Task.Factory.StartNew(() =>
             {
@@ -195,6 +196,7 @@ namespace KinectServer.BusinessLogic
                 sequenceStruct["UserName", 0] = new MLChar("", name);
 
                 MLSingle jointsMat = new MLSingle("", new int[] { _jointsTimesCoordinate, skeleton.Count });
+                MLSingle jointsMat2d = new MLSingle("", new int[] { _jointsTimesCoordinate2d, skeleton2d.Count });
                 int frameCount = 0;
                 foreach (var frame in skeleton)
                 {
@@ -208,7 +210,21 @@ namespace KinectServer.BusinessLogic
                     }
                     frameCount++;
                 }
+                frameCount = 0;
+                foreach (var frame in skeleton2d)
+                {
+                    int jointCount = 0;
+                    foreach (var point in frame)
+                    {
+                        jointsMat2d.Set(point.X, jointCount * 2, frameCount);
+                        jointsMat2d.Set(point.Y, jointCount * 2 + 1, frameCount);
+                        jointCount++;
+                    }
+                    frameCount++;
+                }
+
                 sequenceStruct["Skeletons"] = jointsMat;
+                sequenceStruct["Skeletons2d"] = jointsMat2d;
 
                 if (hits.Count > 0)
                 {
@@ -229,6 +245,7 @@ namespace KinectServer.BusinessLogic
                 if (trajectories.Count > 0)
                 {
                     MLSingle trajMat = new MLSingle("", new int[] { 3, trajectories.Count });
+                    MLSingle trajMat2d = new MLSingle("", new int[] { 2, trajectories2d.Count });
                     int trajCounter = 0;
                     foreach (var t in trajectories)
                     {
@@ -237,7 +254,16 @@ namespace KinectServer.BusinessLogic
                         trajMat.Set(t.Z, 2, trajCounter++);
                     }
 
+                    trajCounter = 0;
+                    foreach (var t in trajectories2d)
+                    {
+                        trajMat2d.Set(t.X, 0, trajCounter);
+                        trajMat2d.Set(t.Y, 1, trajCounter++);
+                        
+                    }
+
                     sequenceStruct["trajectories"] = trajMat;
+                    sequenceStruct["trajectories2d"] = trajMat2d;
                 }
 
                 List<MLArray> matData = new List<MLArray>();

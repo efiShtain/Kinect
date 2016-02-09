@@ -14,6 +14,7 @@ namespace KinectServer.DTO
         //public SkeletonCoordinateSystem SCS { get; set; }
         public int SkeletonIndex { get; set; }
         public ScreenPoint NextEnemyPoint { get; set; }
+        public ScreenPoint RadiusPoint { get; set; }
 
         public Dictionary<int, List<ScreenPoint>> Slices { get; set; }
 

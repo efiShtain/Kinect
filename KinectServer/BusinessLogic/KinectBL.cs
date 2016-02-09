@@ -142,8 +142,9 @@ namespace KinectServer.BusinessLogic
                                   * 
                                  */
 
-                                var leftHand = body.Joints[JointType.HandLeft].Position;
-                                var rightHand = body.Joints[JointType.HandRight].Position;
+                                var leftSide = body.Joints[JointType.ShoulderLeft].Position;
+                                var rightSide = body.Joints[JointType.ShoulderRight].Position;
+                                
                                 var head = body.Joints[JointType.Head].Position;
                                 var leftFoot = body.Joints[JointType.FootLeft].Position;
                                 var rightFoot = body.Joints[JointType.FootRight].Position;
@@ -155,8 +156,17 @@ namespace KinectServer.BusinessLogic
 
                                 var topY = head.Y;
                                 var bottomY = Math.Min(leftFoot.Y, rightFoot.Y);
-                                var minX = Math.Min(leftHand.X, rightHand.X);
-                                var maxX = Math.Max(leftHand.X, rightHand.X);
+                                var minX = Math.Min(leftSide.X, rightSide.X);
+                                var maxX = Math.Max(leftSide.X, rightSide.X);
+
+                                float shoulderWidth = 0.4f; //average shoulder width is 30cm
+                                var totalWidth = maxX - minX; //difference between both hands
+                                if (totalWidth < shoulderWidth) //can happen if person stand on side
+                                {
+                                    var halfDiff = (shoulderWidth - totalWidth)/2;
+                                    maxX += halfDiff;
+                                    minX -= halfDiff;
+                                }
 
                                 BoundingRect bodyRect = new BoundingRect(minX, topY, zPlane, maxX - minX, topY - bottomY, 1.0f);
                                 var innerRect = bodyRect.Inflate(_innerRectInflationRatioX, _innerRectInflationRatioY, 1.0f);
@@ -249,6 +259,14 @@ namespace KinectServer.BusinessLogic
                                 displayData.NextEnemyPoint.X = (int)(mappedEnemy.X * ScaleFactorX);
                                 displayData.NextEnemyPoint.Y = (int)(mappedEnemy.Y * ScaleFactorY);
                                 displayData.NextEnemyPoint.Z = (int)zPlane;
+
+                                //Calculate radius point
+                                nextEnemyPosition.Y += 0.2f;
+                                var mappedEnemyRadius = ConverEnemyLocationToDepthSpace(nextEnemyPosition);
+                                displayData.RadiusPoint = new ScreenPoint();
+                                displayData.RadiusPoint.X = (int)(mappedEnemyRadius.X * ScaleFactorX);
+                                displayData.RadiusPoint.Y = (int)(mappedEnemyRadius.Y * ScaleFactorY);
+                                displayData.RadiusPoint.Z = (int)zPlane;
                             }
                             displayData.Joints = screenPoints;
                             displayData.SkeletonIndex = _skeletonIndex++;

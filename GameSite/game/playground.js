@@ -17,7 +17,7 @@
     var slices = [];
     var newSlices = null;
     var newRects = null;
-    var radius = 1.0;
+    var radius = 0.25;
 
     function endStage() {
         var server = Server.GetInstance();
@@ -25,6 +25,16 @@
         server.UnregisterForMessages(Server.Protocol.GET_NEXT_STAR_POSITION, drawNewStar);
         server.Send({ Type: Server.Protocol.KINECT_STOP });
         game.state.start('instructions');
+    }
+
+    function starOutOfScreen(star) {
+        var hittingJoint = {
+            jointIndex: -1,
+            skeletonIndex: -1
+        }
+        star.kill();
+        server.Send({ Type: Server.Protocol.HITS_DATA, Data: JSON.stringify(hittingJoint) })
+        game.time.events.add(GlobalConfiguration.movingStarsDelay, getSameStarFromServer);
     }
 
 
@@ -35,7 +45,10 @@
         console.log("Creating star");
         currentStar = starsGroup.create(nextStarPoint.X, nextStarPoint.Y, 'a' + Math.floor(Math.random() * 10 % 3 + 1));
         currentStar.anchor.setTo(0.5, 0.5);
-        currentStar.scale.setTo(radius / (currentStar.body.width / 2), radius / (currentStar.body.height / 2) );
+        //currentStar.scale.setTo(radius / (currentStar.body.width / 2), radius / (currentStar.body.height / 2));
+        currentStar.scale.setTo(GlobalConfiguration.RadiusFactor, GlobalConfiguration.RadiusFactor);
+        currentStar.checkWorldBounds = true;
+        currentStar.events.onOutOfBounds.add(starOutOfScreen, this)
         console.log("nextStarId: " + nextStarId);
 
 
@@ -64,6 +77,9 @@
         server.Send({ Type: Server.Protocol.GET_NEXT_STAR_POSITION });
     }
 
+    function getSameStarFromServer() {
+        server.Send({ Type: Server.Protocol.GET_SAME_STAR_POSITION });
+    }
 
     function killStar(player, star) {
         var hittingJoint = nearestJoint();
@@ -126,6 +142,7 @@
     return {
 
         create: function () {
+            game.physics.setBoundsToWorld()
             initStage();
 
             //for debuggin purposes we draw the slices and bounding rects

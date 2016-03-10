@@ -68,6 +68,7 @@ namespace KinectServer.BusinessLogic
             _server.StartServer();
         }
 
+
         #endregion
 
         #region Public Properties
@@ -151,6 +152,11 @@ namespace KinectServer.BusinessLogic
                 case Protocol.GET_NEXT_STAR_POSITION:
                     _waitingForPoint = true;
                     _kinect.IsGetNextPoint = true;
+                    break;
+                case Protocol.GET_SAME_STAR_POSITION:
+                    _waitingForPoint = true;
+                    _kinect.IsGetNextPoint = true;
+                    _kinect.IsGetSamePoint = true;
                     break;
                 case Protocol.HITS_DATA:
                     var hitData = JsonConvert.DeserializeObject<HitData>(message.Data);

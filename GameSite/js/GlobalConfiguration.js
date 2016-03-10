@@ -7,7 +7,7 @@
     GameHeight: 1000,
     TryReconnectToServerInterval: 1000,
     InstructionTimer: 7,
-    States: ['InnerBoundaryCheck', 'OuterBoundaryCheck'],
-    DebugMode: true,
-    RadiusFactor:2
+    States: ['Scenario1', 'Scenario2'],
+    DebugMode: false,
+    RadiusFactor: 0.5
 };

@@ -23,6 +23,7 @@ namespace KinectServer.BusinessLogic
         bool IsOpen { get; }
         bool IsNextPointMoving { get; set; }
         bool IsGetNextPoint { get; set; }
+        bool IsGetSamePoint { get; set; }
         void SetEnemiesList (List<UserDefinedPoint> enemies);
         void SetInflationRatios(Dictionary<string, float> inner, Dictionary<string,float> outter);
     }

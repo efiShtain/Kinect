@@ -12,6 +12,7 @@ namespace Physics
         float _x0, _y0, _z0;
         float _v0x, _v0y, _v0z;
         float _ax, _ay, _az;
+       
         Point3D _lastPoistion;
 
         float _minX, _minY, _minZ;

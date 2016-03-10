@@ -43,8 +43,7 @@ namespace KinectServer.BusinessLogic
         {
             return _gameInputDetails.OuterBoundaryInflRatio;
         }
-
-        
+   
 
         public List<UserDefinedPoint> GetPointsForStage(string username, string stage)
         {
@@ -52,16 +51,28 @@ namespace KinectServer.BusinessLogic
             {
                 if (_gameInputDetails.Players[username].ContainsKey(stage))
                 {
-                    return _gameInputDetails.Players[username][stage];
+                    
+                    var requiredActionsIds =  _gameInputDetails.Players[username][stage];
+                    var requiredPoints = new List<UserDefinedPoint>();
+                    for (int i = 0; i < requiredActionsIds.Count; i++)
+                    {
+                        requiredPoints.Add(_gameInputDetails.Actions[requiredActionsIds[i]]);
+                    }
+                        return requiredPoints;
                 }
             }
             return null;
         }
 
-        public List<Instruction> GetStages()
+        public List<Instruction> GetStages(string playerName = "")
         {
             var stages = new List<Instruction>();
             var firstPlayerStages = _gameInputDetails.Players.FirstOrDefault().Value;
+            if (playerName != string.Empty && _gameInputDetails.Players.ContainsKey(playerName))
+            {
+                firstPlayerStages = _gameInputDetails.Players[playerName];
+            }
+            
             if (firstPlayerStages != null)
             {
                 foreach(var s in firstPlayerStages.Keys)

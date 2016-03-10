@@ -4,6 +4,7 @@ using Microsoft.Kinect;
 using Physics;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace KinectServer.BusinessLogic
         private float _outterRectInflationRatioX = 1.0f;
         private float _outterRectInflationRatioY = 1.0f;
         private int _enemyCounter;
+        private float _g=10.0f, _v=10.0f;
         private Moveable _currentEnemyObject;
 
         public KinectBL()
@@ -33,6 +35,7 @@ namespace KinectServer.BusinessLogic
             SetKinect();
             _skeletonIndex = 1;
             IsGetNextPoint = false;
+            IsGetSamePoint = false;
             _predefinedEnemiesList = null;
             _enemyCounter = 0;
             _currentEnemyObject = null;
@@ -235,14 +238,19 @@ namespace KinectServer.BusinessLogic
                                         displayData.Slices[i].Add(sp);
                                     }
                                 }
-                                
+
+                                if (IsGetSamePoint == true && _enemyCounter>0)
+                                {
+                                    _enemyCounter--; //So we repeat the previous point
+                                    IsGetSamePoint = false;
+                                }
                                 var nextDefinedPoint = _predefinedEnemiesList[_enemyCounter];
                                 currentSlice = slices[nextDefinedPoint.SliceId];
                                 var slicePoint = currentSlice.ConvertPoint(nextDefinedPoint.X, nextDefinedPoint.Y, nextDefinedPoint.Z);
                                 _currentEnemyObject = new Moveable(
                                     (float)slicePoint.X, (float)slicePoint.Y, (float)slicePoint.Z,
-                                    nextDefinedPoint.V0X, nextDefinedPoint.V0Y, nextDefinedPoint.V0Z,
-                                    nextDefinedPoint.AX, nextDefinedPoint.AY, nextDefinedPoint.AZ);
+                                    nextDefinedPoint.V0X*_v, nextDefinedPoint.V0Y*_v, nextDefinedPoint.V0Z*_v,
+                                    nextDefinedPoint.AX*_g, nextDefinedPoint.AY*_g, nextDefinedPoint.AZ*_g);
                                 //_currentEnemyObject.SetBoundaries(-1.5f, -1.5f, -5.0f, 1.5f, 1.5f, 5.0f);
                                 //var boundaries = boundariesRect.GetCorners();
                                 //_currentEnemyObject.SetBoundaries((float)boundaries[0].X, (float)boundaries[0].Y, -5.0f, (float)boundaries[3].X, (float)boundaries[3].Y, 5.0f);
@@ -294,6 +302,7 @@ namespace KinectServer.BusinessLogic
         public bool IsOpen { get { return _sensor.IsOpen; } }
         public bool IsNextPointMoving { get; set; }
         public bool IsGetNextPoint { get; set; }
+        public bool IsGetSamePoint { get; set; }
 
         public event Action<bool> KinectAvailabletyChanged;
         /// <summary>
@@ -311,6 +320,8 @@ namespace KinectServer.BusinessLogic
                 _skeletonIndex = 1;
                 _predefinedEnemiesList = null;
                 _enemyCounter = 0;
+                _g = float.Parse(ConfigurationManager.AppSettings["g"]);
+                _v = float.Parse(ConfigurationManager.AppSettings["v"]);
                 return true;
             }
             return false;
@@ -340,5 +351,6 @@ namespace KinectServer.BusinessLogic
             _outterRectInflationRatioX = outter["RatioX"];
             _outterRectInflationRatioY = outter["RatioY"];
         }
+
     }
 }

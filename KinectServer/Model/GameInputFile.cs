@@ -10,6 +10,7 @@ namespace KinectServer.Model
     {
         public Dictionary<string, float> InnerBoundaryInflRatio { get; set; }
         public Dictionary<string, float> OuterBoundaryInflRatio { get; set; }
-        public Dictionary<string, Dictionary<string, List<UserDefinedPoint>>> Players { get; set; }
+        public Dictionary<int,UserDefinedPoint> Actions { get; set; }
+        public Dictionary<string, Dictionary<string, List<int>>> Players { get; set; }
     }
 }

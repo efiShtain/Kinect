@@ -15,6 +15,7 @@ namespace KinectServer.Communication
 
         GET_NEXT_INSTRUCTIONS = 100,
         GET_NEXT_STAR_POSITION = 101,
+        GET_SAME_STAR_POSITION = 102,
         
         SKELETON_DATA = 200,
         HITS_DATA = 201,

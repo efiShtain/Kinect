@@ -28,6 +28,7 @@ namespace KinectServer
             _kinect = new KinectBL();
             _businessLogics = new KinectServerBL(_kinect, _serverPort);
             _businessLogics.KinectStateChanged += _businessLogics_KinectStateChanged;
+            Player = "default";
             //TODO: Add self hosting service
         }
 

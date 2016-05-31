@@ -4,6 +4,7 @@ using KinectServer.Common;
 using KinectServer.DTO;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,8 @@ namespace KinectServer.BusinessLogic
 
         public static void SetFolder()
         {
-            var path = @"c:\MatlabResults\" + DateTime.Now.ToString("dd-MM-yyyy h_mm_ss");
+            var matlabFolder = ConfigurationManager.AppSettings["matlabFolder"];
+            var path = matlabFolder + DateTime.Now.ToString("dd-MM-yyyy h_mm_ss");
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

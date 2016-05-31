@@ -95,7 +95,7 @@ namespace KinectServer.BusinessLogic
                     KinectStateChanged(KinectState.STOPPED);
                 }
 
-                GenerateMatlabFiles();
+                //GenerateMatlabFiles();
                 _recordedHitsData.Clear();
                 _trajectoriesData.Clear();
                 _trajectoriesDataIn2D.Clear();

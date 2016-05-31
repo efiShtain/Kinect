@@ -7,7 +7,7 @@
     GameHeight: 1000,
     TryReconnectToServerInterval: 1000,
     InstructionTimer: 7,
-    States: ['Scenario1', 'Scenario2'],
+    States: ['Scenario1'],
     DebugMode: false,
-    RadiusFactor: 0.5
+    RadiusFactor: 2.0
 };

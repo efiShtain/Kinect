@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace KinectServer.BusinessLogic
 {
@@ -30,6 +31,7 @@ namespace KinectServer.BusinessLogic
             }
             catch (Exception e)
             {
+                MessageBox.Show("Json file is malformed");
                 return false;
             }
         }

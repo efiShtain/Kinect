@@ -68,6 +68,9 @@ namespace KinectServer.BusinessLogic
             _server.StartServer();
         }
 
+        public void SetPlayerName(string player){
+            _currentPlayer = player;
+        }
 
         #endregion
 
@@ -139,7 +142,8 @@ namespace KinectServer.BusinessLogic
                         _trajectoriesData.Add(instruction.State, new List<Point3D>());
                         _trajectoriesDataIn2D.Add(instruction.State, new List<ScreenPoint>());
                         _recordedHitsData.Add(instruction.State, new List<Hit>());
-                        var enemiesList = _pointsParser.GetPointsForStage(_currentPlayer, instruction.State);
+                        //var enemiesList = _pointsParser.GetPointsForStage(_currentPlayer, instruction.State);
+                        var enemiesList = _pointsParser.GetPointsForStage("default", instruction.State);
                         _kinect.SetEnemiesList(enemiesList);
                         instruction.EnemyCount = enemiesList.Count;
                     }

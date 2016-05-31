@@ -45,7 +45,7 @@
                     console.log("Connected to server...");
                     clearInterval(tryConnectInterval);
 
-                    server.Send({ Type: Server.Protocol.PLAYER_NAME, Data: 'efi' });
+                    //server.Send({ Type: Server.Protocol.PLAYER_NAME, Data: 'efi' });
 
                     server.RegisterForMessages('states', nextState);
                     console.log("try to start game");

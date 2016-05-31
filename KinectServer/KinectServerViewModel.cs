@@ -70,6 +70,22 @@ namespace KinectServer
             }
         }
 
+
+        private string _player;
+        public string Player
+        {
+            get { return _player; }
+            set
+            {
+                if (_player != value)
+                {
+                    _player = value;
+                    _businessLogics.SetPlayerName(value);
+                    OnPropertyChanged("Player");
+                }
+            }
+        }
+
         private KinectState _kinectState;
         public KinectState KinectState
         {

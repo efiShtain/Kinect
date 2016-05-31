@@ -26,5 +26,7 @@ namespace KinectServer.BusinessLogic
         bool IsGetSamePoint { get; set; }
         void SetEnemiesList (List<UserDefinedPoint> enemies);
         void SetInflationRatios(Dictionary<string, float> inner, Dictionary<string,float> outter);
+
+       
     }
 }

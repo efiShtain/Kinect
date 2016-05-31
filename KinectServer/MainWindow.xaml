@@ -24,5 +24,9 @@
             <Label Foreground="White" HorizontalAlignment="Center">Kinect State</Label>
             <TextBlock Text="{Binding KinectState, Converter={StaticResource KinectStateConverter}}"/>
         </StackPanel>
+        <StackPanel Grid.Row="1" >
+            <Label FontSize="20">Name</Label>
+            <TextBox Text="{Binding Player, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        </StackPanel>
     </Grid>
 </Window>
